@@ -1,4 +1,4 @@
-const CACHE_NAME = "sg-vs-par-v2-8-1";
+const CACHE_NAME = "sg-vs-par-v2-8-2";
 const PATCH_TAG = '<script src="./v2_8_1_patch.js"></script>';
 const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./v2_8_1_patch.js"];
 
