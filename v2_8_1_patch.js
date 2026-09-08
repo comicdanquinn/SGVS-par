@@ -1,6 +1,7 @@
-// SG vs Par v2.8.1 corrective patch
+// SG vs Par v2.8.2 corrective patch
 // 1) Honors tee-specific pars for Surrey Forward and Peace Portal Red.
 // 2) Recovers completed rounds stored under prior version keys into Results history.
+// 3) Restores the approved six-state lie/access entry system.
 
 (function(){
   function activePars(courseName, teeName){
@@ -9,7 +10,6 @@
     return (c.teePars && c.teePars[selected]) ? c.teePars[selected] : c.pars;
   }
 
-  // Replace the core template helper so every caller receives the correct tee-specific par.
   templateFor = function(courseName, teeName){
     const c=courseDefs[courseName] || courseDefs["Fraserview Golf Course"];
     const selected=(teeName && c.tees[teeName]) ? teeName : c.defaultTee;
@@ -116,6 +116,53 @@
       }
     }catch(_){}
   }
+
+  // Approved golfer-facing lie/access states and created-position PR costs.
+  // Legacy labels remain in the cost table so old saved rounds can still recalculate.
+  Object.assign(createdLieCost, {
+    "Fairway / Fringe":0.0,
+    "Light Rough":0.1,
+    "Deep Rough":0.2,
+    "Bunker":0.2,
+    "Restricted":0.5,
+    "Recovery Only":1.0
+  });
+
+  const LIE_OPTIONS = ["Fairway / Fringe","Light Rough","Deep Rough","Bunker","Restricted","Recovery Only"];
+  const LEGACY_LIE_MAP = {
+    "Fairway":"Fairway / Fringe",
+    "Fringe/Puttable":"Fairway / Fringe",
+    "Rough":"Light Rough",
+    "Heavy Rough":"Deep Rough",
+    "Fairway Bunker":"Bunker",
+    "Greenside Bunker":"Bunker",
+    "Trees/Clear Shot":"Restricted",
+    "Restricted/Blocked":"Restricted",
+    "Recovery Only":"Recovery Only"
+  };
+
+  function simplifyLieSelect(hi, preferred){
+    const sel=document.getElementById(`lie${hi}`);
+    if(!sel) return;
+    const wanted=LEGACY_LIE_MAP[preferred || sel.value] || preferred || sel.value || "Fairway / Fringe";
+    sel.innerHTML=LIE_OPTIONS.map(x=>`<option value="${x}">${x}</option>`).join("");
+    sel.value=LIE_OPTIONS.includes(wanted) ? wanted : "Fairway / Fringe";
+  }
+
+  const originalShotForm=shotForm;
+  shotForm=function(hi){
+    const form=originalShotForm(hi);
+    setTimeout(()=>simplifyLieSelect(hi),0);
+    return form;
+  };
+
+  const originalPopulateEditForm=populateEditForm;
+  populateEditForm=function(hi,si){
+    const s=round.holes[hi] && round.holes[hi].shots ? round.holes[hi].shots[si] : null;
+    const oldLie=s ? s.lie : null;
+    originalPopulateEditForm(hi,si);
+    if(s && s.dest!=="Green" && s.dest!=="Holed") simplifyLieSelect(hi,oldLie);
+  };
 
   migrateCompletedPriorRounds();
   repairCurrentSpecialTee();
