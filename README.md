@@ -1,11 +1,11 @@
-# SG vs Par v2.7
+# SG vs Par v2.8
 
-GitHub/Netlify-ready static web app.
+Changes:
+- Course dropdown alphabetized
+- Restored top explanation
+- Added "How It Works" tab
+- Improved version-to-version local round migration
+- Automatically migrates a completed live round into Results history when possible
+- Keeps Burnaby Mountain Blue handicap rating/slope support
 
-Files:
-- index.html — latest SG vs Par v2.7 app
-- manifest.webmanifest — installable web-app metadata
-- sw.js — offline cache/service worker
-- icon-192.png / icon-512.png — app icons
-
-For Netlify, publish the repository root. No build command is required.
+Netlify: publish repository root. No build command required.

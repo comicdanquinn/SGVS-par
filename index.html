@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SG vs Par Multi-Course Round Entry v2.7</title>
+<title>SG vs Par Multi-Course Round Entry v2.8</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 0; background:#f6f7f5; color:#222; }
   header { background:#173d2d; color:white; padding:18px 22px; }
@@ -63,6 +63,13 @@
   .insight-copy { font-size:12px; color:#666; line-height:1.4; }
   .history-row { cursor:pointer; }
   .history-row:hover { background:#f7faf8; }
+  .top-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0; }
+  .top-tab { border:1px solid #cfd8d1; background:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+  .top-tab.active { background:#183c2b; color:#fff; border-color:#183c2b; }
+  .how-card { border:1px solid #dce3de; border-radius:12px; padding:16px; background:#fff; margin-bottom:14px; }
+  .how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+  .how-step { border:1px solid #e3e8e4; border-radius:10px; padding:12px; background:#fbfdfb; }
+  .intro-strip { padding:12px 14px; border-radius:10px; background:#f3f8f4; border:1px solid #dce8df; margin:10px 0 12px; line-height:1.45; }
   .round-link { font-weight:700; text-decoration:underline; text-underline-offset:2px; }
   .detail-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-start; justify-content:center; padding:32px 14px; z-index:1000; overflow:auto; }
   .detail-overlay.open { display:flex; }
@@ -85,14 +92,12 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#183c2b">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="SG vs Par">
 <link rel="apple-touch-icon" href="icon-192.png">
-
 </head>
 <body>
 <header>
-  <h1>Strokes Gained vs Par — Multi-Course Round Entry v2.7</h1>
+  <h1>Strokes Gained vs Par — Multi-Course Round Entry v2.8</h1>
   <div class="sub">Choose a course and starting tee set, then all 18 hole pars and yardages auto-load. Expanded Metro Vancouver library: Fraserview, McCleery, Langara, UBC, Burnaby Mountain, Riverway, Northlands, Mayfair Lakes, Kings Links, Morgan Creek, Northview Ridge, Northview Canal, Hazelmere, Surrey Golf Club, Peace Portal, Meadow Gardens, and Redwoods. You can still adjust any individual hole yardage for daily tee-marker and pin-position changes. Clean live-entry build with selectable 1–10 putts, grouped auto-putting, 60-yard Short Game auto-switch, position-based PR inside 60 yards, and score calculation from shot entries.</div>
 </header>
 
@@ -108,25 +113,23 @@
   <h2 style="margin-top:0">Round Setup</h2>
   <div class="row">
     <div><label>Course</label>
-      <select id="course" onchange="onCourseSelectionChange()">
-        <option value="Fraserview Golf Course">Fraserview Golf Course</option>
-        <option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
-        <option value="Northview Ridge Course">Northview — Ridge Course</option>
-        <option value="Northview Canal Course">Northview — Canal Course</option>
-        <option value="University Golf Club (UBC)">University Golf Club (UBC)</option>
-        <option value="Langara Golf Course">Langara Golf Course</option>
-        <option value="McCleery Golf Course">McCleery Golf Course</option>
-        <option value="Burnaby Mountain Golf Course">Burnaby Mountain Golf Course</option>
-        <option value="Riverway Golf Course">Riverway Golf Course</option>
-        <option value="Northlands Golf Course">Northlands Golf Course</option>
-        <option value="Mayfair Lakes Golf & Country Club">Mayfair Lakes Golf & Country Club</option>
-        <option value="Kings Links Golf Course">Kings Links Golf Course</option>
-        <option value="Hazelmere Golf Course">Hazelmere Golf Course</option>
-        <option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
-        <option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
-        <option value="Meadow Gardens Golf Club">Meadow Gardens Golf Club</option>
-        <option value="Redwoods Golf Course">Redwoods Golf Course</option>
-      </select>
+      <select id="course" onchange="onCourseSelectionChange()"><option value="Burnaby Mountain Golf Course">Burnaby Mountain Golf Course</option>
+<option value="Fraserview Golf Course">Fraserview Golf Course</option>
+<option value="Hazelmere Golf Course">Hazelmere Golf Course</option>
+<option value="Kings Links Golf Course">Kings Links Golf Course</option>
+<option value="Langara Golf Course">Langara Golf Course</option>
+<option value="Mayfair Lakes Golf & Country Club">Mayfair Lakes Golf & Country Club</option>
+<option value="McCleery Golf Course">McCleery Golf Course</option>
+<option value="Meadow Gardens Golf Club">Meadow Gardens Golf Club</option>
+<option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
+<option value="Northlands Golf Course">Northlands Golf Course</option>
+<option value="Northview Canal Course">Northview — Canal Course</option>
+<option value="Northview Ridge Course">Northview — Ridge Course</option>
+<option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
+<option value="Redwoods Golf Course">Redwoods Golf Course</option>
+<option value="Riverway Golf Course">Riverway Golf Course</option>
+<option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
+<option value="University Golf Club (UBC)">University Golf Club (UBC)</option></select>
     </div>
     <div><label>Starting Tees</label>
       <select id="tees" onchange="onTeeSelectionChange()"></select>
@@ -168,7 +171,7 @@
 </div>
 
 <div class="card">
-  <h3 style="margin-top:0">Current calibration assumptions — v2.7</h3>
+  <h3 style="margin-top:0">Current calibration assumptions — v2.8</h3>
   <p><b>Auto category:</b> Any shot inherited from a position 60 yd or less off the green is automatically classified as Short Game. You can still override the category manually.</p>
   <div class="note">
     Putting PR: 0–3 ft 1.0; 4–6 ft 1.2; 7–9 ft 1.5; 10–14 ft 1.7; 15–35 ft 2.0; 36–50 ft 2.1; 51–70 ft 2.3; 70+ ft 2.5. Putting is scored once from the starting bucket: <b>Putting SGvP = starting putting PR − total putts</b>.
@@ -202,6 +205,49 @@
   </div>
 </div>
 
+
+
+<div id="howView" style="display:none">
+  <section class="how-card">
+    <h2 style="margin-top:0">How SG vs Par Works</h2>
+    <p><b>Par is the universal benchmark.</b> The system does not compare you with a Tour player, scratch golfer, or handicap group. It measures how efficiently you used the strokes par gives you on each hole.</p>
+    <p><b>Every shot owns the position it creates.</b> A poor shot is charged for leaving you in a difficult scoring position. The next shot is judged on how well it improves that inherited position.</p>
+  </section>
+
+  <section class="how-grid">
+    <div class="how-step"><b>Driving</b><br>Par-4 and par-5 tee shots. Good drives create an easier next scoring position; trouble, penalties, and forced recovery are charged here.</div>
+    <div class="how-step"><b>Approach</b><br>Par-3 tee shots and full shots toward the green. The better the position created, the more value the shot gains.</div>
+    <div class="how-step"><b>Short Game</b><br>Shots from 60 yards and in when off the green. Chips, pitches, and greenside bunker shots are scored by the position they leave.</div>
+    <div class="how-step"><b>Putting</b><br>Enter the starting putt distance and total putts. Routine two-putts from normal range are near neutral; short misses and three-putts lose strokes.</div>
+  </section>
+
+  <section class="how-card">
+    <h3 style="margin-top:0">Why the Numbers Always Reconcile</h3>
+    <p>Internally, each shot is scored from the change in <b>Par Remaining</b>:</p>
+    <p><b>Shot SGvP = PR before − PR after − 1</b></p>
+    <p>Because each shot picks up where the previous one left off, all of the shot values telescope together. The four categories always equal:</p>
+    <p><b>Par − Actual Score</b></p>
+    <p>So a birdie totals <b>+1.0</b>, par totals <b>0.0</b>, bogey totals <b>−1.0</b>, and double bogey totals <b>−2.0</b>.</p>
+  </section>
+
+  <section class="how-card">
+    <h3 style="margin-top:0">Simple Example — Par 4 Bogey</h3>
+    <p>You hit a decent drive, miss the green with the approach, hit an average chip, and two-putt for 5.</p>
+    <p>The hole might break down as:</p>
+    <p><b>Driving 0.0 · Approach −0.5 · Short Game −0.5 · Putting 0.0 = −1.0</b></p>
+    <p>The system does not just tell you that you made bogey. It shows <b>where the lost stroke came from</b>.</p>
+  </section>
+
+  <section class="how-card">
+    <h3 style="margin-top:0">Penalties</h3>
+    <p>Penalty cost belongs to the shot that caused it. A drive into a penalty area is charged to Driving; an approach into a hazard is charged to Approach. Stroke-and-distance creates a <b>−2.0 deficit</b> before the replacement shot is evaluated.</p>
+  </section>
+
+  <section class="how-card">
+    <h3 style="margin-top:0">You vs You</h3>
+    <p>Over time, the Results page compares your latest round with your recent averages so you can see what is improving, what is costing you strokes, and which part of your game deserves attention next.</p>
+  </section>
+</div>
 
 <div id="roundDetailOverlay" class="detail-overlay" onclick="closeRoundDetail(event)">
   <div class="detail-panel" onclick="event.stopPropagation()">
@@ -1137,7 +1183,8 @@ function newBlankRound(){
   render();
 }
 
-const STORAGE_KEY = "sg_vs_par_multi_course_v2_7";
+const STORAGE_KEY = "sg_vs_par_multi_course_v2_8";
+const PREVIOUS_STORAGE_KEYS = ["sg_vs_par_multi_course_v2_7","sg_vs_par_multi_course_v2_6","sg_vs_par_multi_course_v2_5","sg_vs_par_multi_course_v2_4"];
 const PREVIOUS_STORAGE_KEY = "sg_vs_par_multi_course_v2_6";
 const HISTORY_KEY = "sg_vs_par_round_history_v1";
 let editingShot = null;
@@ -1848,14 +1895,34 @@ function saveProgress(showMessage=true){
   }
 }
 
+
+function getPreviousSavedRound(){
+  for(const key of PREVIOUS_STORAGE_KEYS){
+    const raw=localStorage.getItem(key);
+    if(raw) return raw;
+  }
+  return null;
+}
+
+function migrateKnownRating(r){
+  if(!r) return r;
+  const hr=handicapRatingFor(r.course,r.tees);
+  if(hr && (r.courseRating==null || r.slopeRating==null)){
+    r.courseRating=hr.rating;
+    r.slopeRating=hr.slope;
+    r.pcc=Number(r.pcc)||0;
+  }
+  return r;
+}
+
 function restoreProgress(){
   try{
-    const raw=localStorage.getItem(STORAGE_KEY) || localStorage.getItem(PREVIOUS_STORAGE_KEY);
+    const raw=localStorage.getItem(STORAGE_KEY) || getPreviousSavedRound();
     if(!raw){
       document.getElementById("copyStatus").textContent="No saved round was found in this browser.";
       return;
     }
-    round=JSON.parse(raw);
+    round=migrateKnownRating(JSON.parse(raw));
     if(round.date===undefined) round.date="";
     render();
     document.getElementById("copyStatus").textContent="Saved round restored.";
@@ -1926,10 +1993,27 @@ function importJSON(){
   };
   f.click();
 }
+
+function migrateCompletedLiveRoundToHistory(){
+  try{
+    if(!round || !Array.isArray(round.holes) || round.holes.length!==18) return;
+    const complete=round.holes.every(h=>Number(h.score)>0);
+    if(!complete) return;
+    if(!round.historyId) return;
+    const history=getHistory();
+    if(history.some(r=>r.id===round.historyId)) return;
+    const snap=roundSnapshot(round);
+    if(!snap) return;
+    snap.id=round.historyId;
+    history.push(snap);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  }catch(_){}
+}
+
 try{
-  const saved=localStorage.getItem(STORAGE_KEY) || localStorage.getItem(PREVIOUS_STORAGE_KEY);
+  const saved=localStorage.getItem(STORAGE_KEY) || getPreviousSavedRound();
   if(saved){
-    round=JSON.parse(saved);
+    round=migrateKnownRating(JSON.parse(saved));
     if(round.date===undefined) round.date="";
     const hr=handicapRatingFor(round.course,round.tees);
     if(hr && (round.courseRating==null || round.slopeRating==null)){
@@ -1938,6 +2022,7 @@ try{
       round.pcc=Number(round.pcc)||0;
       try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(round)); }catch(_){}
     }
+    migrateCompletedLiveRoundToHistory();
     render();
   }else{
     newFraserviewRound();
@@ -1946,14 +2031,10 @@ try{
   newFraserviewRound();
 }
 </script>
-
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 }
 </script>
-
 </body>
 </html>

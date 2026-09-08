@@ -6,7 +6,7 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#183c2b",
-  "description": "SG vs Par golf round entry, results, trends, and handicap estimate.",
+  "description": "SG vs Par golf round entry, results, trends, handicap estimate, and How It Works guide.",
   "icons": [
     {
       "src": "icon-192.png",
