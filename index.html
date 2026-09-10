@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SG vs Par Multi-Course Round Entry v2.8</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SG vs Par Multi-Course Round Entry v6.2</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 0; background:#f6f7f5; color:#222; }
   header { background:#173d2d; color:white; padding:18px 22px; }
@@ -63,13 +64,6 @@
   .insight-copy { font-size:12px; color:#666; line-height:1.4; }
   .history-row { cursor:pointer; }
   .history-row:hover { background:#f7faf8; }
-  .top-tabs { display:flex; gap:8px; flex-wrap:wrap; margin:14px 0; }
-  .top-tab { border:1px solid #cfd8d1; background:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
-  .top-tab.active { background:#183c2b; color:#fff; border-color:#183c2b; }
-  .how-card { border:1px solid #dce3de; border-radius:12px; padding:16px; background:#fff; margin-bottom:14px; }
-  .how-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
-  .how-step { border:1px solid #e3e8e4; border-radius:10px; padding:12px; background:#fbfdfb; }
-  .intro-strip { padding:12px 14px; border-radius:10px; background:#f3f8f4; border:1px solid #dce8df; margin:10px 0 12px; line-height:1.45; }
   .round-link { font-weight:700; text-decoration:underline; text-underline-offset:2px; }
   .detail-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:flex-start; justify-content:center; padding:32px 14px; z-index:1000; overflow:auto; }
   .detail-overlay.open { display:flex; }
@@ -85,187 +79,333 @@
   .handicap-caption { font-size:12px; color:#666; margin-top:5px; }
   .handicap-used { background:#eef6f0; }
   .handicap-input { width:95px; }
+  .profile-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; align-items:end; }
+  .provider-status { display:inline-block; padding:4px 9px; border-radius:999px; background:#f0f2f0; font-size:12px; color:#555; }
+  .provider-status.connected { background:#eef6f0; color:#176b37; }
+  .provider-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .post-round-card { margin-top:14px; padding:14px; border:1px solid #dfe5df; border-radius:12px; background:#fbfcfb; }
+  .post-round-card h3 { margin:0 0 6px; }
 
   footer { font-size:12px; color:#777; margin-top:18px; }
+
+  .profile-gate { position:fixed; inset:0; background:rgba(20,30,25,.72); display:none; align-items:center; justify-content:center; padding:20px; z-index:5000; }
+  .profile-gate.open { display:flex; }
+  .profile-gate-panel { width:min(100%,520px); background:#fff; border-radius:14px; box-shadow:0 24px 80px rgba(0,0,0,.35); padding:24px; }
+  .profile-gate-panel h2 { margin:0 0 8px; }
+  .profile-gate-panel p { color:#666; line-height:1.45; font-size:14px; }
+  .profile-gate-grid { display:grid; grid-template-columns:1fr; gap:14px; margin-top:18px; }
+  .profile-gate-grid input { width:100%; box-sizing:border-box; font-size:16px; padding:11px 12px; }
+  .profile-required { font-size:11px; color:#8a1d1d; margin-top:4px; min-height:15px; }
+  body.profile-locked { overflow:hidden; }
+
+/* v6.2 mobile field-test additions */
+.mobile-test-bar{
+  position:sticky; top:0; z-index:9999;
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  padding:8px 12px;
+  background:#f7f7f2; border-bottom:1px solid #d8ddd6;
+  font-size:12px; line-height:1.2;
+}
+#saveStatus{white-space:nowrap}
+@media (max-width:700px){
+  body{font-size:16px}
+  button,select,input,textarea{min-height:44px;font-size:16px}
+  .card{border-radius:14px}
+  .mobile-test-bar{font-size:11px}
+}
+
 </style>
 
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#183c2b">
+<meta name="theme-color" content="#0f5132">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="SG vs Par">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
+
 </head>
 <body>
+<div class="mobile-test-bar">
+  <strong>SG vs Par v6.2 • Mobile Field Test</strong>
+  <span id="saveStatus">Ready</span>
+</div>
 <header>
-  <h1>Strokes Gained vs Par — Multi-Course Round Entry v2.8</h1>
-  <div class="sub">Choose a course and starting tee set, then all 18 hole pars and yardages auto-load. Expanded Metro Vancouver library: Fraserview, McCleery, Langara, UBC, Burnaby Mountain, Riverway, Northlands, Mayfair Lakes, Kings Links, Morgan Creek, Northview Ridge, Northview Canal, Hazelmere, Surrey Golf Club, Peace Portal, Meadow Gardens, and Redwoods. You can still adjust any individual hole yardage for daily tee-marker and pin-position changes. Clean live-entry build with selectable 1–10 putts, grouped auto-putting, 60-yard Short Game auto-switch, position-based PR inside 60 yards, and score calculation from shot entries.</div>
+<h1>Strokes Gained vs Par</h1>
+<div class="sub" style="line-height:1.55;margin-top:8px">
+<b>Quick Start:</b>
+After each shot enter <b>Distance Remaining + Lie</b>.
+Choose the lie that best describes where the ball finished.
+On the green, enter the <b>first-putt distance range + total putts</b>:
+1–2 ft · 3–4 ft · 5–6 ft · 7–9 ft · 10–14 ft · then larger ranges.
+SG vs Par calculates Driving, Approach, Short Game and Putting automatically.
+Hole yardage can be adjusted when today’s tee or pin position is noticeably different; small changes are only marginally important.
+</div>
 </header>
-
+<div aria-labelledby="profileGateTitle" aria-modal="true" class="profile-gate" id="profileGate" role="dialog">
+<div class="profile-gate-panel">
+<h2 id="profileGateTitle">Create Your SG vs Par Profile</h2>
+<p>Before entering your first score, create your player profile. You only need to do this once on this device. Your rounds, SGvP stats, handicap estimate, and trends will then stay separate from other golfers.</p>
+<div class="profile-gate-grid">
+<div>
+<label>Player Name <b>*</b></label>
+<input autocomplete="name" id="setupPlayerName" onkeydown="if(event.key==='Enter') completeProfileSetup()" placeholder="Your name" type="text"/>
+<div class="profile-required" id="setupPlayerNameError"></div>
+</div>
+<div>
+<label>Official / Current Handicap Index <span class="muted">(optional)</span></label>
+<input id="setupHandicap" onkeydown="if(event.key==='Enter') completeProfileSetup()" placeholder="e.g. 14.2" step="0.1" type="number"/>
+</div>
+<button class="primary" onclick="completeProfileSetup()" style="font-size:16px;padding:11px 14px">Create Profile &amp; Start</button>
+</div>
+<div class="note">The name is required so every saved round belongs to the correct golfer. Handicap can be added now or entered later.</div>
+</div>
+</div>
 <div class="topnav">
-  <button id="navEntry" class="active" onclick="showPage('entry')">Round Entry</button>
-  <button id="navResults" onclick="showPage('results')">Results</button>
+<button class="active" id="navEntry" onclick="showPage('entry')">Round Entry</button>
+<button id="navResults" onclick="showPage('results')">Results</button>
+<button id="navGuide" onclick="showPage('guide')">How It’s Calculated</button>
 </div>
-
 <div class="wrap">
-<div id="entryPage" class="page">
-
+<div class="page" id="entryPage">
 <div class="card">
-  <h2 style="margin-top:0">Round Setup</h2>
-  <div class="row">
-    <div><label>Course</label>
-      <select id="course" onchange="onCourseSelectionChange()"><option value="Burnaby Mountain Golf Course">Burnaby Mountain Golf Course</option>
-<option value="Fraserview Golf Course">Fraserview Golf Course</option>
-<option value="Hazelmere Golf Course">Hazelmere Golf Course</option>
-<option value="Kings Links Golf Course">Kings Links Golf Course</option>
-<option value="Langara Golf Course">Langara Golf Course</option>
-<option value="Mayfair Lakes Golf & Country Club">Mayfair Lakes Golf & Country Club</option>
-<option value="McCleery Golf Course">McCleery Golf Course</option>
-<option value="Meadow Gardens Golf Club">Meadow Gardens Golf Club</option>
-<option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
-<option value="Northlands Golf Course">Northlands Golf Course</option>
-<option value="Northview Canal Course">Northview — Canal Course</option>
-<option value="Northview Ridge Course">Northview — Ridge Course</option>
-<option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
-<option value="Redwoods Golf Course">Redwoods Golf Course</option>
-<option value="Riverway Golf Course">Riverway Golf Course</option>
-<option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
-<option value="University Golf Club (UBC)">University Golf Club (UBC)</option></select>
-    </div>
-    <div><label>Starting Tees</label>
-      <select id="tees" onchange="onTeeSelectionChange()"></select>
-    </div>
-    <div><label>Round Date</label><input id="date" type="date" onchange="setRoundDate(this.value)"></div>
-    <div><label>Total Par</label><input id="totalPar" type="number" value="72" style="width:90px"></div>
-    <div><label>Course Rating</label><input id="courseRating" class="handicap-input" type="number" step="0.1" placeholder="e.g. 70.0" onchange="setHandicapField('courseRating',this.value)"></div>
-    <div><label>Slope</label><input id="slopeRating" class="handicap-input" type="number" step="1" placeholder="113" onchange="setHandicapField('slopeRating',this.value)"></div>
-    <div><label>PCC</label><input id="pcc" class="handicap-input" type="number" step="1" value="0" onchange="setHandicapField('pcc',this.value)"></div>
-    <div><label>Difficulty</label><input id="difficultyDisplay" class="handicap-input" value="—" readonly title="Course Rating reflects scratch-player difficulty; Slope reflects how much harder the course plays for a bogey golfer."></div>
+<h2 style="margin-top:0">Player Profile</h2>
+<div class="profile-grid">
+<div><label>Player Name</label><input id="playerName" onchange="setPlayerName(this.value)" placeholder="e.g. Dan Quinn" type="text"/></div>
+<div><label>Official / Current Handicap Index</label><input class="handicap-input" id="currentHandicap" onchange="setCurrentHandicap(this.value)" placeholder="e.g. 14.2" step="0.1" type="number"/></div>
 </div>
-  <div class="note">Choose a course first, then choose any available fixed tee set for that course. All 18 hole pars and official yardages load automatically. You can then edit any individual hole yardage to match the tee marker and pin position that day; those edits do not change the selected tee identity. Changing the tee dropdown again reloads that tee set’s official hole yardages. <b>When a shot reaches the green, choose the starting putt-distance bucket and total putts (1–10). The calculator stores the putting sequence as one grouped result and closes the hole.</b></div>
+<div class="note">Player Name is required during first-time setup before any scores can be entered. After that, the profile stays active on this device. Each player gets a separate saved round, Results history, handicap profile, You vs You trends, and statistics. To switch golfers later, change the Player Name to an existing profile name or enter a new name.</div>
+</div>
+<div class="card">
+<h2 style="margin-top:0">Round Setup</h2>
+<div class="row">
+<div><label>Course</label>
+<select id="course" onchange="onCourseSelectionChange()">
+<option value="Fraserview Golf Course">Fraserview Golf Course</option>
+<option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
+<option value="Northview Ridge Course">Northview — Ridge Course</option>
+<option value="Northview Canal Course">Northview — Canal Course</option>
+<option value="University Golf Club (UBC)">University Golf Club (UBC)</option>
+<option value="Langara Golf Course">Langara Golf Course</option>
+<option value="McCleery Golf Course">McCleery Golf Course</option>
+<option value="Burnaby Mountain Golf Course">Burnaby Mountain Golf Course</option>
+<option value="Riverway Golf Course">Riverway Golf Course</option>
+<option value="Northlands Golf Course">Northlands Golf Course</option>
+<option value="Mayfair Lakes Golf &amp; Country Club">Mayfair Lakes Golf &amp; Country Club</option>
+<option value="Kings Links Golf Course">Kings Links Golf Course</option>
+<option value="Hazelmere Golf Course">Hazelmere Golf Course</option>
+<option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
+<option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
+<option value="Meadow Gardens Golf Club">Meadow Gardens Golf Club</option>
+<option value="Redwoods Golf Course">Redwoods Golf Course</option>
+</select>
+</div>
+<div><label>Starting Tees</label>
+<select id="tees" onchange="onTeeSelectionChange()"></select>
+</div>
+<div><label>Round Date</label><input id="date" onchange="setRoundDate(this.value)" type="date"/></div>
+<div><label>Total Par</label><input id="totalPar" style="width:90px" type="number" value="72"/></div>
+<div><label>Course Rating</label><input class="handicap-input" id="courseRating" onchange="setHandicapField('courseRating',this.value)" placeholder="e.g. 70.0" step="0.1" type="number"/></div>
+<div><label>Slope</label><input class="handicap-input" id="slopeRating" onchange="setHandicapField('slopeRating',this.value)" placeholder="113" step="1" type="number"/></div>
+<div><label>PCC</label><input class="handicap-input" id="pcc" onchange="setHandicapField('pcc',this.value)" step="1" type="number" value="0"/></div>
+</div>
+<div class="note">Choose a course first, then choose any available fixed tee set for that course. All 18 hole pars and official yardages load automatically. Where a tee's Course Rating and Slope are stored in the course library, those handicap fields also load automatically; you can still edit them if a scorecard changes. Individual hole yardage edits do not change the selected tee identity. <b>When a shot reaches the green, choose the starting putt-distance bucket and total putts (1–10). The calculator stores the putting sequence as one grouped result and closes the hole.</b></div>
 </div>
 
 <div id="holes"></div>
-
 <div class="card">
-  <h2 style="margin-top:0">Round Summary</h2>
-  <div class="summary-grid">
-    <div class="metric">Driving<b id="sumDriving">0.0</b></div>
-    <div class="metric">Approach<b id="sumApproach">0.0</b></div>
-    <div class="metric">Short Game<b id="sumShort">0.0</b></div>
-    <div class="metric">Putting<b id="sumPutting">0.0</b></div>
-    <div class="metric">Internal SGvP<b id="sumTotal">0.0</b></div>
-    <div class="metric">Strokes Over Par<b id="sumOver">0.0</b></div>
-    <div class="metric">Penalty Strokes<b id="sumPenalties">0</b></div>
-  </div>
-  <p id="roundRecon" class="muted"></p>
-  <button class="primary" onclick="finishRound()">Finish Round &amp; Save Results</button>
-  <button onclick="showPage('results')">View Results</button>
-  <button onclick="copyRoundData()">Copy Round Data</button>
-  <button onclick="saveProgress()">Save Progress</button>
-  <button onclick="restoreProgress()">Restore Saved Round</button>
-  <button onclick="exportJSON()">Export Round JSON</button>
-  <button onclick="importJSON()">Import Round JSON</button>
-  <input id="importFile" type="file" accept=".json" class="hidden"/>
-  <div id="copyStatus" class="note"></div>
-  <textarea id="roundDataBox" class="hidden" style="width:100%;height:180px;margin-top:10px;font-family:monospace;font-size:12px"></textarea>
+<h2 style="margin-top:0">Round Summary</h2>
+<div class="summary-grid">
+<div class="metric">Driving<b id="sumDriving">0.0</b></div>
+<div class="metric">Approach<b id="sumApproach">0.0</b></div>
+<div class="metric">Short Game<b id="sumShort">0.0</b></div>
+<div class="metric">Putting<b id="sumPutting">0.0</b></div>
+<div class="metric">Internal SGvP<b id="sumTotal">0.0</b></div>
+<div class="metric">Strokes Over Par<b id="sumOver">0.0</b></div>
+<div class="metric">Penalty Strokes<b id="sumPenalties">0</b></div>
 </div>
-
-<div class="card">
-  <h3 style="margin-top:0">Current calibration assumptions — v2.8</h3>
-  <p><b>Auto category:</b> Any shot inherited from a position 60 yd or less off the green is automatically classified as Short Game. You can still override the category manually.</p>
-  <div class="note">
-    Putting PR: 0–3 ft 1.0; 4–6 ft 1.2; 7–9 ft 1.5; 10–14 ft 1.7; 15–35 ft 2.0; 36–50 ft 2.1; 51–70 ft 2.3; 70+ ft 2.5. Putting is scored once from the starting bucket: <b>Putting SGvP = starting putting PR − total putts</b>.
-    Short-game PR: 0–5 yd 2.0; 6–10 yd 2.2; 11–15 yd 2.5; 16–30 yd 2.7; 31–50 yd 2.9; 51–60 yd 3.0. More than 60 yd defaults to Approach.
-    A shot owns the position it creates. Ordinary bad shots that still leave a normal direct recovery are capped around −1.0; larger losses require extra damage such as a penalty, forced recovery, or a worse resulting position. Stroke-and-distance/re-tee creates a −2.0 deficit before the replacement shot is evaluated.
-  </div>
-</div>
-
+<p class="muted" id="roundRecon"></p>
+<button class="primary" onclick="finishRound()">Finish Round &amp; Save Results</button>
+<button onclick="showPage('results')">View Results</button>
+<button onclick="copyRoundData()">Copy Round Data</button>
+<button onclick="saveProgress()">Save Progress</button>
+<button onclick="restoreProgress()">Restore Saved Round</button>
+<button onclick="exportJSON()">Export Round JSON</button>
+<button onclick="importJSON()">Import Round JSON</button>
+<input accept=".json" class="hidden" id="importFile" type="file">
+<div class="note" id="copyStatus"></div>
+<textarea class="hidden" id="roundDataBox" style="width:100%;height:180px;margin-top:10px;font-family:monospace;font-size:12px"></textarea>
+</input></div>
 
 </div><!-- /entryPage -->
-
-<div id="resultsPage" class="page hidden-page">
-  <div class="card">
-    <div class="row" style="justify-content:space-between;align-items:center">
-      <div>
-        <h2 style="margin:0">Results</h2>
-        <div class="muted">Your SG vs Par history, with the most recent round compared with your selected rolling average.</div>
-      </div>
-      <div>
-        <label>Show / compare against</label>
-        <select id="resultsRange" onchange="renderResults()">
-          <option value="1">Last round</option>
-          <option value="5" selected>Last 5 rounds</option>
-          <option value="10">Last 10 rounds</option>
-          <option value="20">Last 20 rounds</option>
-          <option value="all">All rounds</option>
-        </select>
-      </div>
-    </div>
-    <div id="resultsContent"></div>
-  </div>
+<div class="page hidden-page" id="resultsPage">
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center">
+<div>
+<h2 style="margin:0">Results</h2>
+<div class="muted">Your SG vs Par history, with the most recent round compared with your selected rolling average.</div>
 </div>
-
-
-
-<div id="howView" style="display:none">
-  <section class="how-card">
-    <h2 style="margin-top:0">How SG vs Par Works</h2>
-    <p><b>Par is the universal benchmark.</b> The system does not compare you with a Tour player, scratch golfer, or handicap group. It measures how efficiently you used the strokes par gives you on each hole.</p>
-    <p><b>Every shot owns the position it creates.</b> A poor shot is charged for leaving you in a difficult scoring position. The next shot is judged on how well it improves that inherited position.</p>
-  </section>
-
-  <section class="how-grid">
-    <div class="how-step"><b>Driving</b><br>Par-4 and par-5 tee shots. Good drives create an easier next scoring position; trouble, penalties, and forced recovery are charged here.</div>
-    <div class="how-step"><b>Approach</b><br>Par-3 tee shots and full shots toward the green. The better the position created, the more value the shot gains.</div>
-    <div class="how-step"><b>Short Game</b><br>Shots from 60 yards and in when off the green. Chips, pitches, and greenside bunker shots are scored by the position they leave.</div>
-    <div class="how-step"><b>Putting</b><br>Enter the starting putt distance and total putts. Routine two-putts from normal range are near neutral; short misses and three-putts lose strokes.</div>
-  </section>
-
-  <section class="how-card">
-    <h3 style="margin-top:0">Why the Numbers Always Reconcile</h3>
-    <p>Internally, each shot is scored from the change in <b>Par Remaining</b>:</p>
-    <p><b>Shot SGvP = PR before − PR after − 1</b></p>
-    <p>Because each shot picks up where the previous one left off, all of the shot values telescope together. The four categories always equal:</p>
-    <p><b>Par − Actual Score</b></p>
-    <p>So a birdie totals <b>+1.0</b>, par totals <b>0.0</b>, bogey totals <b>−1.0</b>, and double bogey totals <b>−2.0</b>.</p>
-  </section>
-
-  <section class="how-card">
-    <h3 style="margin-top:0">Simple Example — Par 4 Bogey</h3>
-    <p>You hit a decent drive, miss the green with the approach, hit an average chip, and two-putt for 5.</p>
-    <p>The hole might break down as:</p>
-    <p><b>Driving 0.0 · Approach −0.5 · Short Game −0.5 · Putting 0.0 = −1.0</b></p>
-    <p>The system does not just tell you that you made bogey. It shows <b>where the lost stroke came from</b>.</p>
-  </section>
-
-  <section class="how-card">
-    <h3 style="margin-top:0">Penalties</h3>
-    <p>Penalty cost belongs to the shot that caused it. A drive into a penalty area is charged to Driving; an approach into a hazard is charged to Approach. Stroke-and-distance creates a <b>−2.0 deficit</b> before the replacement shot is evaluated.</p>
-  </section>
-
-  <section class="how-card">
-    <h3 style="margin-top:0">You vs You</h3>
-    <p>Over time, the Results page compares your latest round with your recent averages so you can see what is improving, what is costing you strokes, and which part of your game deserves attention next.</p>
-  </section>
+<div>
+<label>Show / compare against</label>
+<select id="resultsRange" onchange="renderResults()">
+<option value="1">Last round</option>
+<option selected="" value="5">Last 5 rounds</option>
+<option value="10">Last 10 rounds</option>
+<option value="20">Last 20 rounds</option>
+<option value="all">All rounds</option>
+</select>
 </div>
-
-<div id="roundDetailOverlay" class="detail-overlay" onclick="closeRoundDetail(event)">
-  <div class="detail-panel" onclick="event.stopPropagation()">
-    <div class="detail-head">
-      <div>
-        <h2 id="roundDetailTitle" style="margin:0">Round Detail</h2>
-        <div id="roundDetailSub" class="muted"></div>
-      </div>
-      <button class="detail-close" onclick="closeRoundDetail()">×</button>
-    </div>
-    <div id="roundDetailContent"></div>
-  </div>
 </div>
+<div id="resultsContent"></div>
+</div>
+</div>
+<div class="page hidden-page" id="guidePage">
 
+
+
+
+
+
+
+
+<div class="card">
+<h2 style="margin-top:0">How It’s Calculated</h2>
+<p class="muted">SG vs Par uses the yardage and putting ranges you enter, then applies the matching Position Rating (PR) and lie/access deduction automatically. You do not need to do any math while entering a round.</p>
+</div><div class="card">
+<h3 style="margin-top:0">How a Shot Is Evaluated</h3>
+<p><b>SGvP = PR before − 1 − PR after.</b> In plain language: the shot gets credit for how much it improves the hole position after spending one stroke. Penalty strokes are counted once, and the shot that created the trouble owns the consequence.</p>
+</div><div class="card">
+<h3 style="margin-top:0">Putting PR</h3>
+<p>Putting is evaluated from the original starting distance and the total number of putting strokes used by SGvP, including a putt from the fringe when it is entered as Puttable.</p>
+<table class="compare-table">
+<thead><tr><th>Starting putt distance</th><th class="num">Putting PR</th><th class="num">2-putt SGvP</th></tr></thead>
+<tbody>
+<tr><td>1–2 ft</td><td class="num">1.0</td><td class="num">−1.0</td></tr>
+<tr><td>3–4 ft</td><td class="num">1.1</td><td class="num">−0.9</td></tr>
+<tr><td>5–6 ft</td><td class="num">1.3</td><td class="num">−0.7</td></tr>
+<tr><td>7–9 ft</td><td class="num">1.5</td><td class="num">−0.5</td></tr>
+<tr><td>10–14 ft</td><td class="num">1.7</td><td class="num">−0.3</td></tr>
+<tr><td>15–20 ft</td><td class="num">1.8</td><td class="num">−0.2</td></tr>
+<tr><td>21–30 ft</td><td class="num">1.9</td><td class="num">−0.1</td></tr>
+<tr><td>31–40 ft</td><td class="num">2.0</td><td class="num">0.0</td></tr>
+<tr><td>41–55 ft</td><td class="num">2.1</td><td class="num">+0.1</td></tr>
+<tr><td>56–75 ft</td><td class="num">2.2</td><td class="num">+0.2</td></tr>
+<tr><td>76+ ft</td><td class="num">2.3</td><td class="num">+0.3</td></tr>
+</tbody>
+</table>
+<div class="note"><b>Formula:</b> Putting SGvP = Starting Putting PR − Total Putting Strokes.</div>
+</div><div class="card">
+<h3 style="margin-top:0">Short Game &amp; Approach Distance PR</h3>
+<p>Every off-green position uses the same distance-remaining PR buckets. The 50-yard line changes only the reporting category, not the scoring value.</p>
+<table class="compare-table">
+<thead><tr><th>Distance remaining</th><th class="num">Base PR</th><th>Reported category</th></tr></thead>
+<tbody>
+<tr><td>1–4 yd off green</td><td class="num">2.2</td><td>Short Game</td></tr>
+<tr><td>5–9 yd</td><td class="num">2.3</td><td>Short Game</td></tr>
+<tr><td>10–14 yd</td><td class="num">2.4</td><td>Short Game</td></tr>
+<tr><td>15–25 yd</td><td class="num">2.5</td><td>Short Game</td></tr>
+<tr><td>26–40 yd</td><td class="num">2.6</td><td>Short Game</td></tr>
+<tr><td>41–50 yd</td><td class="num">2.7</td><td>Short Game</td></tr>
+<tr><td>51–75 yd</td><td class="num">2.7</td><td>Approach</td></tr>
+<tr><td>76–100 yd</td><td class="num">2.8</td><td>Approach</td></tr>
+<tr><td>101–125 yd</td><td class="num">2.9</td><td>Approach</td></tr>
+<tr><td>126–150 yd</td><td class="num">3.0</td><td>Approach</td></tr>
+<tr><td>151–155 yd</td><td class="num">3.0</td><td>Approach</td></tr>
+<tr><td>156–170 yd</td><td class="num">3.1</td><td>Approach</td></tr>
+<tr><td>171–180 yd</td><td class="num">3.2</td><td>Approach</td></tr>
+<tr><td>181–190 yd</td><td class="num">3.3</td><td>Approach</td></tr>
+<tr><td>191–200 yd</td><td class="num">3.4</td><td>Approach</td></tr>
+<tr><td>201–210 yd</td><td class="num">3.5</td><td>Approach</td></tr>
+<tr><td>211–220 yd</td><td class="num">3.6</td><td>Approach</td></tr>
+<tr><td>221–226 yd</td><td class="num">3.7</td><td>Approach</td></tr>
+<tr><td>227–232 yd</td><td class="num">3.8</td><td>Approach</td></tr>
+<tr><td>233–260 yd</td><td class="num">4.0</td><td>Approach</td></tr>
+<tr><td>261–290 yd</td><td class="num">4.2</td><td>Approach</td></tr>
+<tr><td>291–325 yd</td><td class="num">4.4</td><td>Approach</td></tr>
+<tr><td>326–400 yd</td><td class="num">4.7</td><td>Approach</td></tr>
+<tr><td>401+ yd</td><td class="num">5.0</td><td>Approach</td></tr>
+</tbody>
+</table>
+<div class="note"><b>Core rule:</b> if a shot finishes in the same PR state it started from, it loses 1.0 stroke. Moving into a better PR state reduces that loss or creates a gain.</div>
+</div><div class="card">
+<h3 style="margin-top:0">Quick Examples</h3>
+<table class="compare-table">
+<thead><tr><th>Example</th><th>PR change</th><th class="num">SGvP</th></tr></thead>
+<tbody>
+<tr><td>Par 4 tee shot leaves 140 yd, Fairway / First Cut</td><td>4.0 → 3.0</td><td class="num">0.0</td></tr>
+<tr><td>Par 4 tee shot leaves 190 yd, Fairway / First Cut</td><td>4.0 → 3.3</td><td class="num">−0.3</td></tr>
+<tr><td>Par 4 tee shot leaves 100 yd, Fairway / First Cut</td><td>4.0 → 2.8</td><td class="num">+0.2</td></tr>
+<tr><td>20 yd short-game shot finishes 7–9 ft</td><td>2.5 → 1.5</td><td class="num">0.0</td></tr>
+<tr><td>15–20 ft starting putt, 3 putts</td><td>Putting PR 1.8</td><td class="num">−1.2</td></tr>
+<tr><td>Stroke &amp; Distance</td><td>Returns to prior position</td><td class="num">−2.0</td></tr>
+</tbody></table>
+<div class="note">Every example uses the same rule: SGvP = PR before − 1 − PR after. Distance remaining determines the bucket; lie/access then adjusts the resulting PR.</div>
+</div><div class="card">
+<h3 style="margin-top:0">Lie / Access Adjustment</h3>
+<table class="compare-table">
+<thead><tr><th>Created lie or access</th><th class="num">Added PR difficulty</th></tr></thead>
+<tbody>
+<tr><td>Fairway / First Cut</td><td class="num">+0.0</td></tr>
+<tr><td>Light Rough</td><td class="num">+0.1</td></tr>
+<tr><td>Deep Rough</td><td class="num">+0.2</td></tr><tr><td>Bunker</td><td class="num">+0.2</td></tr>
+<tr><td>Restricted</td><td class="num">+0.5</td></tr>
+<tr><td>Recovery Only</td><td class="num">+1.0</td></tr>
+</tbody>
+</table>
+<div class="note">The same five states are used everywhere. Distance sets the base PR; lie/access adds difficulty to the position created.</div>
+</div><div class="card">
+<h3 style="margin-top:0">Tester Feedback</h3>
+<p class="muted">During testing, save a comment here whenever something feels confusing, unfair, or especially useful. Feedback is stored separately for the active player on this device.</p>
+<div class="row">
+<div><label>Hole (optional)</label><input id="feedbackHole" max="18" min="1" placeholder="e.g. 10" style="width:100px" type="number"/></div>
+<div style="flex:1;min-width:260px"><label>Feedback</label><textarea id="feedbackText" placeholder="What felt confusing, inaccurate, useful, or difficult to enter?" style="width:100%;height:90px"></textarea></div>
+</div>
+<button class="primary" onclick="saveTesterFeedback()">Save Feedback</button>
+<button onclick="copyTesterFeedback()">Copy My Feedback</button>
+<button onclick="clearTesterFeedback()">Clear My Feedback</button>
+<div class="note" id="feedbackStatus"></div>
+<div id="feedbackList"></div>
+</div></div>
+<div class="detail-overlay" id="roundDetailOverlay" onclick="closeRoundDetail(event)">
+<div class="detail-panel" onclick="event.stopPropagation()">
+<div class="detail-head">
+<div>
+<h2 id="roundDetailTitle" style="margin:0">Round Detail</h2>
+<div class="muted" id="roundDetailSub"></div>
+</div>
+<button class="detail-close" onclick="closeRoundDetail()">×</button>
+</div>
+<div id="roundDetailContent"></div>
+</div>
+</div>
 <footer>Prototype for SG vs Par testing. Values are provisional and intended for calibration with real rounds.</footer>
 </div>
-
 <script>
+
+// v6.2 mobile field-test helpers
+function setSaveStatus(text){
+  const el=document.getElementById("saveStatus");
+  if(el) el.textContent=text;
+}
+function markSaved(){
+  try{
+    const now=new Date();
+    setSaveStatus("Saved " + now.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}));
+  }catch(e){ setSaveStatus("Saved"); }
+}
+window.addEventListener("pagehide", ()=>{ try{ if(typeof autosave==="function") autosave(); }catch(e){} });
+document.addEventListener("visibilitychange", ()=>{
+  if(document.visibilityState==="hidden"){
+    try{ if(typeof autosave==="function") autosave(); }catch(e){}
+  }
+});
+window.addEventListener("online", ()=>setSaveStatus("Online"));
+window.addEventListener("offline", ()=>setSaveStatus("Offline • local save active"));
+if("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>{
+    navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  });
+}
+
 const hz = [
  [4,370],[5,521],[4,356],[4,318],[5,507],[3,147],[3,188],[4,344],[4,420],
  [4,426],[4,405],[5,472],[3,200],[4,356],[4,361],[5,501],[3,156],[4,353]
@@ -523,110 +663,86 @@ const mcTeeClub = ["1W","1W","6i","3W","1W","1W","1W","8i","3W","1W","1W","3W","
 
 let round = { course:"", tees:"", date:"", courseRating:null, slopeRating:null, pcc:0, holes:[] };
 
-// v0.9 calibration tables. A shot owns the position it creates; the next shot inherits that PR.
-// Lies remain context unless a calibrated created-position cost is explicitly applied below.
+// v2.9 calibration: par is the benchmark; a shot owns the position and consequences it creates.
+// Lie cost is an adjustment to the value created by the shot. A forced recovery costs a full stroke.
 const createdLieCost = {
-  "Fairway":0.0, "Fringe/Puttable":0.0, "Light Rough":0.0, "Rough":0.0, "Heavy Rough":0.1,
-  "Fairway Bunker":0.3, "Greenside Bunker":0.2, "Trees/Clear Shot":0.2,
-  "Restricted/Blocked":0.5, "Recovery Only":0.8
+  // v4.1 five-state golfer-facing model
+  "Fairway / First Cut":0.0,
+  "Fairway / Fringe":0.0,
+  "Light Rough":0.1,
+  "Deep Rough / Bunker":0.2, "Deep Rough":0.2, "Bunker":0.2,
+  "Restricted":0.5,
+  "Recovery Only":1.0,
+  // Legacy aliases retained only so older saved rounds still recalculate correctly.
+  "Fairway":0.0, "Fringe/Puttable":0.0, "Rough":0.2, "Heavy Rough":0.2,
+  "Fairway Bunker":0.2, "Greenside Bunker":0.2, "Trees/Clear Shot":0.5,
+  "Restricted/Blocked":0.5
 };
 
 function puttingPR(bucket){
+  // v2.9 putting curve. Legacy bucket names remain readable for older saved rounds.
   const map = {
     "Holed":0.0,
-    "0–3 ft":1.0,
-    "4–6 ft":1.2,
+    "1–2 ft":1.0,
+    "3–4 ft":1.1,
+    "5–6 ft":1.3,
     "7–9 ft":1.5,
     "10–14 ft":1.7,
-    "15–35 ft":2.0,
-    "36–50 ft":2.1,
-    "51–70 ft":2.3,
-    "70+ ft":2.5
+    "15–20 ft":1.8,
+    "21–30 ft":1.9,
+    "31–40 ft":2.0,
+    "41–55 ft":2.1,
+    "56–75 ft":2.2,
+    "76+ ft":2.3,
+    // Legacy v2.8 compatibility
+    "0–3 ft":1.0, "4–6 ft":1.2, "15–35 ft":2.0,
+    "36–50 ft":2.1, "51–70 ft":2.3, "70+ ft":2.5
   };
   return map[bucket];
 }
 
-function shortGamePR(yards){
+function positionPR(yards){
   yards=Number(yards);
-  if(yards<=5) return 2.0;
-  if(yards<=10) return 2.2;
-  if(yards<=15) return 2.5;
-  if(yards<=30) return 2.7;
-  if(yards<=50) return 2.9;
-  return 3.0;
+  // v4.4 approved distance buckets. Holed is handled separately as PR 0.0.
+  if(yards<=4) return 2.2;
+  if(yards<=9) return 2.3;
+  if(yards<=14) return 2.4;
+  if(yards<=25) return 2.5;
+  if(yards<=40) return 2.6;
+  if(yards<=75) return 2.7;
+  if(yards<=100) return 2.8;
+  if(yards<=125) return 2.9;
+  if(yards<=155) return 3.0;
+  if(yards<=170) return 3.1;
+  if(yards<=180) return 3.2;
+  if(yards<=190) return 3.3;
+  if(yards<=200) return 3.4;
+  if(yards<=210) return 3.5;
+  if(yards<=220) return 3.6;
+  if(yards<=226) return 3.7;
+  if(yards<=232) return 3.8;
+  if(yards<=260) return 4.0;
+  if(yards<=290) return 4.2;
+  if(yards<=325) return 4.4;
+  if(yards<=400) return 4.7;
+  return 5.0;
+}
+
+function resolvePositionZone(destType, remYds){
+  if(destType==="Holed") return "Holed";
+  if(destType==="Green") return "Green";
+  const y=Number(remYds);
+  if(Number.isFinite(y) && y>=0 && y<=50) return "Short Game";
+  return "Approach";
 }
 
 function round1(x){ return Math.round(x*10)/10; }
 
-function par4DriveSG(holeYds, remYds, lie){
-  // Still provisional, but softened so a tee shot that leaves a normal green-reaching shot is not over-penalized.
-  const frac=Number(remYds)/Number(holeYds);
-  let sg;
-  if(frac<=.27) sg=0.3;
-  else if(frac<=.31) sg=0.2;
-  else if(frac<=.35) sg=0.1;
-  else if(frac<=.40) sg=0.0;
-  else if(frac<=.46) sg=-0.1;
-  else if(frac<=.52) sg=-0.3;
-  else if(frac<=.60) sg=-0.5;
-  else sg=-0.7;
-  sg -= (createdLieCost[lie]||0);
-  return round1(Math.max(-1.0,sg));
-}
-
-function par5DriveSG(holeYds, remYds, lie){
-  const frac=Number(remYds)/Number(holeYds);
-  let sg;
-  if(frac<=.40) sg=0.3;
-  else if(frac<=.46) sg=0.1;
-  else if(frac<=.54) sg=0.0;
-  else if(frac<=.60) sg=-0.1;
-  else if(frac<=.68) sg=-0.3;
-  else sg=-0.5;
-  sg -= (createdLieCost[lie]||0);
-  return round1(Math.max(-1.0,sg));
-}
-
-function estimateFullShotPR(hole, remYds, lie){
-  // Provisional outward progression. Near-hole shots should use Short Game or Green buckets.
-  remYds=Number(remYds);
-  let pr;
-  if(hole.par===3){
-    if(remYds<=50) pr=2.9;
-    else if(remYds<=100) pr=3.0;
-    else pr=3.1;
-  } else if(hole.par===4){
-    const frac=remYds/hole.yards;
-    if(frac<=.25) pr=2.8;
-    else if(frac<=.35) pr=3.0;
-    else if(frac<=.45) pr=3.1;
-    else if(frac<=.55) pr=3.3;
-    else pr=3.5;
-  } else {
-    const frac=remYds/hole.yards;
-    if(frac<=.20) pr=3.0;
-    else if(frac<=.32) pr=3.2;
-    else if(frac<=.45) pr=3.6;
-    else if(frac<=.60) pr=4.0;
-    else pr=4.4;
-  }
-  return round1(pr + (createdLieCost[lie]||0));
-}
-
 function getStatePR(hole, destType, remYds, lie, puttBucket){
-  if(destType==="Green") return puttingPR(puttBucket);
-  if(destType==="Holed") return 0.0;
-
-  // LOCKED POSITION RULE: the PR of the position created depends on where
-  // the ball finished, not on the category of the shot that created it.
-  // Any off-green finish 60 yards or less therefore uses the Short Game PR
-  // table, even when the shot itself was classified as Approach.
-  const y=Number(remYds);
-  if(Number.isFinite(y) && y>=0 && y<=60){
-    return round1(shortGamePR(y) + (createdLieCost[lie]||0));
-  }
-
-  return estimateFullShotPR(hole, y, lie);
+  const zone=resolvePositionZone(destType,remYds);
+  if(zone==="Green") return puttingPR(puttBucket);
+  if(zone==="Holed") return 0.0;
+  return round1(positionPR(remYds) + (createdLieCost[lie]||0));
 }
 
 function inferCategory(hole, shotIndex, shotType){
@@ -638,15 +754,10 @@ function inferCategory(hole, shotIndex, shotType){
     if(prev.dest==="Green" || prev.category==="Putting") return "Putting";
 
     // Auto short-game rule: the CURRENT shot inherits the position created
-    // by the previous shot. If that position is 60 yards or less from the
+    // by the previous shot. If that position is 50 yards or less from the
     // hole and is not on the green, classify the current shot as Short Game.
     // This fixes cases where chips/pitches were incorrectly left as Approach.
-    const prevYards=Number(prev.yards);
-    if((prev.dest==="Short Game") ||
-       ((prev.dest==="Full Shot" || prev.dest==="Stroke & Distance") &&
-        Number.isFinite(prevYards) && prevYards>=0 && prevYards<=60)){
-      return "Short Game";
-    }
+    if(resolvePositionZone(prev.dest,prev.yards)==="Short Game") return "Short Game";
   }
   return "Approach";
 }
@@ -666,12 +777,6 @@ function populateTeeDropdown(courseName, preferredTee){
 }
 
 function render(){
-  const preKnownRating=handicapRatingFor(round.course,round.tees);
-  if(preKnownRating && (round.courseRating==null || round.slopeRating==null)){
-    round.courseRating=preKnownRating.rating;
-    round.slopeRating=preKnownRating.slope;
-    round.pcc=Number(round.pcc)||0;
-  }
   const courseName=courseDefs[round.course] ? round.course : "Fraserview Golf Course";
   document.getElementById("course").value=courseName;
   round.course=courseName;
@@ -686,14 +791,9 @@ function render(){
   if(crEl) crEl.value=(round.courseRating===null || round.courseRating===undefined)?"":round.courseRating;
   if(slEl) slEl.value=(round.slopeRating===null || round.slopeRating===undefined)?"":round.slopeRating;
   if(pccEl) pccEl.value=(round.pcc===null || round.pcc===undefined)?0:round.pcc;
-  const diffEl=document.getElementById("difficultyDisplay");
-  if(diffEl){
-    if(round.courseRating!=null && round.slopeRating!=null){
-      diffEl.value=`CR ${Number(round.courseRating).toFixed(1)} / Slope ${Number(round.slopeRating).toFixed(0)}`;
-    }else{
-      diffEl.value="—";
-    }
-  }
+  const currentHiEl=document.getElementById("currentHandicap");
+  if(currentHiEl){ const chi=getCurrentHandicap(); currentHiEl.value=chi===null?"":chi; }
+  renderHandicapProfileControls();
   const wrap=document.getElementById("holes");
   wrap.innerHTML="";
   round.holes.forEach((h,hi)=>wrap.appendChild(renderHole(h,hi)));
@@ -757,8 +857,7 @@ function shotForm(hi){
       <div><label>Ball finished...</label>
         <select id="dest${hi}" onchange="toggleDest(${hi})">
           <option value="Full Shot" selected>Yards remaining</option>
-          <option value="Short Game">Short-game distance</option>
-          <option value="Green">On green / puttable</option>
+                    <option value="Green">On green / puttable</option>
           <option value="Holed">Holed</option>
         </select>
       </div>
@@ -768,8 +867,8 @@ function shotForm(hi){
       <div id="puttBox${hi}" class="hidden">
         <label>Distance to hole</label>
         <select id="putt${hi}">
-          <option>0–3 ft</option><option>4–6 ft</option><option>7–9 ft</option><option>10–14 ft</option>
-          <option selected>15–35 ft</option><option>36–50 ft</option><option>51–70 ft</option><option>70+ ft</option>
+          <option>1–2 ft</option><option>3–4 ft</option><option>5–6 ft</option><option>7–9 ft</option><option>10–14 ft</option>
+          <option>15–20 ft</option><option>21–30 ft</option><option selected>31–40 ft</option><option>41–55 ft</option><option>56–75 ft</option><option>76+ ft</option>
         </select>
       </div>
       <div id="puttCountBox${hi}" class="hidden">
@@ -781,16 +880,15 @@ function shotForm(hi){
       <div id="lieBox${hi}">
         <label>Lie</label>
         <select id="lie${hi}">
-          <option>Fairway</option><option>Fringe/Puttable</option><option>Light Rough</option><option>Rough</option><option>Heavy Rough</option>
-          <option>Fairway Bunker</option><option>Greenside Bunker</option><option>Trees/Clear Shot</option>
-          <option>Restricted/Blocked</option><option>Recovery Only</option>
+          <option>Fairway / First Cut</option><option>Light Rough</option><option>Deep Rough</option><option>Bunker</option>
+          <option>Restricted</option><option>Recovery Only</option>
         </select>
       </div>
       <div><label>Penalty</label>
         <select id="pen${hi}" onchange="togglePenalty(${hi})">
           <option value="none">No penalty</option>
           <option value="drop">+1 penalty / drop</option>
-          <option value="strokeDistance">Stroke &amp; distance / re-tee</option>
+          <option value="strokeDistance">2 strokes — Stroke &amp; Distance</option>
         </select>
       </div>
       <button class="primary" onclick="addShot(${hi})">${editingShot && editingShot.hi===hi ? "Update Shot" : "Add Shot"}</button>
@@ -814,7 +912,7 @@ function toggleDest(hi){
     const known=round.holes[hi].recordedPutts;
     note.textContent = known!=null
       ? `Loaded scorecard default: ${known} putt${Number(known)===1?'':'s'}. Change Total putts if this hole was different. Adding the green position will auto-complete Putting.`
-      : "Choose Total putts. Adding the green position will auto-complete Putting and calculate the hole score from your entries.";
+      : "Choose the putt range and total putts. 2 putts is preselected; Add Shot completes the hole.";
     note.classList.remove("hidden");
   } else {
     note.classList.add("hidden");
@@ -827,7 +925,7 @@ function togglePenalty(hi){
   const disabled=p==="strokeDistance";
   [document.getElementById(`dest${hi}`),document.getElementById(`yards${hi}`),document.getElementById(`lie${hi}`),document.getElementById(`putt${hi}`),document.getElementById(`puttCount${hi}`)].forEach(el=>{if(el)el.disabled=disabled;});
   if(disabled){
-    document.getElementById(`autoPuttNote${hi}`).textContent="Stroke & distance: this shot costs the original stroke + one penalty stroke (−2.0) and resets PR to the previous starting position. Enter the replacement/re-tee as the next shot.";
+    document.getElementById(`autoPuttNote${hi}`).textContent="2 strokes — Stroke & Distance: this shot costs the original stroke + one penalty stroke (−2.0) and resets PR to the previous starting position. Enter the replacement shot as the next shot.";
     document.getElementById(`autoPuttNote${hi}`).classList.remove("hidden");
   }
 }
@@ -867,13 +965,21 @@ function removeAutoPutting(h){
 function autoCompletePutting(hi, startPR, bucket, puttCount){
   const h=round.holes[hi];
   removeAutoPutting(h);
-  const n=Number(puttCount);
-  if(!n || n<1) return;
+  const total=Number(puttCount);
+  if(!total || total<1) return;
+  // Total putts is authoritative. If a user has manually entered one or more
+  // putting strokes (for example to record a bad first-putt leave), only add
+  // the remaining putts so the hole can never double-count them.
+  const manualPutts=h.shots
+    .filter(s=>!s.autoPutting && s.category==="Putting")
+    .reduce((n,s)=>n+(Number(s.strokesUsed)||1),0);
+  const n=Math.max(0,total-manualPutts);
+  if(n===0) return;
   h.shots.push({
     category:"Putting", dest:"Holed", lie:"", putt:bucket, yards:0,
     penalty:0, penaltyMode:"none", strokesUsed:n, autoPutting:true,
     beforePR:startPR, afterPR:0, sg:round1(startPR-n),
-    label:`${n} putt${n===1?'':'s'} from ${bucket} (auto)`
+    label:`${n} remaining putt${n===1?'':'s'} from ${bucket} (auto; ${total} total)`
   });
 }
 
@@ -888,11 +994,12 @@ function ensureAutoPutting(hi){
 }
 
 function buildLabel(s){
-  if(s.autoPutting) return `${s.strokesUsed} putt${s.strokesUsed===1?'':'s'} from ${s.putt} (auto)`;
-  if(s.penaltyMode==="strokeDistance") return "Stroke & distance / re-tee — reset to prior position";
+  if(s.autoPutting) return s.label || `${s.strokesUsed} putt${s.strokesUsed===1?'':'s'} from ${s.putt} (auto)`;
+  if(s.penaltyMode==="strokeDistance") return "2 strokes — Stroke & Distance — reset to prior position";
   if(s.dest==="Green") return `${s.putt}`;
   if(s.dest==="Holed") return "Holed";
-  return `${s.yards} yd left • ${s.lie}`;
+  const zone=resolvePositionZone(s.dest,s.yards);
+  return `${s.yards} yd left • ${s.lie}${zone==="Short Game" ? " • Short Game position" : ""}`;
 }
 
 function recalcHole(hi){
@@ -908,21 +1015,21 @@ function recalcHole(hi){
       s.penalty=1;
     } else if(s.dest==="Holed"){
       after=0;
-    } else if(si===0 && s.category==="Driving" && s.dest==="Full Shot"){
-      const sgBase = h.par===4 ? par4DriveSG(h.yards,s.yards,s.lie) : par5DriveSG(h.yards,s.yards,s.lie);
-      after = before - 1 - sgBase;
     } else {
+      // Bucket-only model: every tee shot and every later shot is scored from
+      // the PR of the actual position created (distance remaining + lie/access).
       after=getStatePR(h,s.dest,s.yards,s.lie,s.putt);
     }
     s.beforePR=before;
     s.afterPR=after;
+    s.resolvedZone=resolvePositionZone(s.dest,s.yards);
     s.strokesUsed=s.strokesUsed||1;
     s.sg=round1(before-after-1-(s.penalty||0));
     // Ordinary non-penalty misses with a normal direct recovery should not exceed roughly -1.0.
-    if(!s.penalty && s.dest!=="Holed" && s.sg < -1.0 && s.penaltyMode!=="strokeDistance"){
-      s.sg=-1.0; s.afterPR=round1(before-1-s.sg); after=s.afterPR;
-    }
     s.label=buildLabel(s);
+    if(si===0 && s.category==="Driving" && s.dest==="Full Shot") {
+      s.label += ` • Bucket model • PR ${after.toFixed(1)}`;
+    }
     before=after;
   });
 }function editShot(hi,si){
@@ -941,7 +1048,7 @@ function populateEditForm(hi,si){
   document.getElementById(`dest${hi}`).value=s.dest;
   toggleDest(hi);
   if(s.dest==="Green"){
-    document.getElementById(`putt${hi}`).value=s.putt || "15–35 ft";
+    document.getElementById(`putt${hi}`).value=s.putt || "31–40 ft";
     const pc=document.getElementById(`puttCount${hi}`);
     if(pc && round.holes[hi].recordedPutts!=null) pc.value=String(round.holes[hi].recordedPutts);
   } else if(s.dest!=="Holed"){
@@ -968,7 +1075,7 @@ function addShot(hi){
   let newShot;
   if(penaltyMode==="strokeDistance"){
     const before=currentPR(h);
-    newShot={category:cat,dest:"Stroke & Distance",lie:"",putt:"",yards:0,penalty:1,penaltyMode,strokesUsed:1,beforePR:before,afterPR:before,sg:-2.0,label:"Stroke & distance / re-tee — reset to prior position"};
+    newShot={category:cat,dest:"Stroke & Distance",lie:"",putt:"",yards:0,penalty:1,penaltyMode,strokesUsed:1,beforePR:before,afterPR:before,sg:-2.0,label:"2 strokes — Stroke & Distance — reset to prior position"};
   } else {
     const dest=document.getElementById(`dest${hi}`).value;
     const pen=penaltyMode==="drop" ? 1 : 0;
@@ -977,12 +1084,9 @@ function addShot(hi){
     const yards=(dest==="Green"||dest==="Holed") ? 0 : Number(document.getElementById(`yards${hi}`).value);
     const before=currentPR(h);
     let after;
-    if(si===0 && cat==="Driving" && dest==="Full Shot"){
-      const sgBase=h.par===4 ? par4DriveSG(h.yards,yards,lie) : par5DriveSG(h.yards,yards,lie);
-      after=before-1-sgBase;
-    } else after=getStatePR(h,dest,yards,lie,putt);
+    // Bucket-only model for all shots, including par-4 and par-5 tee shots.
+    after=getStatePR(h,dest,yards,lie,putt);
     let sg=round1(before-after-1-pen);
-    if(!pen && dest!=="Holed" && sg < -1.0){ sg=-1.0; after=round1(before-1-sg); }
     newShot={category:cat,dest,lie,putt,yards,penalty:pen,penaltyMode,strokesUsed:1,beforePR:before,afterPR:after,sg,label:""};
     newShot.label=buildLabel(newShot);
   }
@@ -1031,6 +1135,9 @@ function onCourseSelectionChange(){
   const c=courseDefs[courseName];
   round.course=courseName;
   round.tees=c.defaultTee;
+  const hr=handicapRatingFor(courseName,round.tees);
+  if(hr){ round.courseRating=hr.rating; round.slopeRating=hr.slope; }
+  else { round.courseRating=null; round.slopeRating=null; }
   const template=templateFor(courseName, round.tees);
   round.holes=template.map(x=>({par:x[0],yards:x[1],score:null,shots:[],recordedPutts:null,teeClub:"",scoreSource:null,puttsSource:null,penaltyFlag:false}));
   document.getElementById("totalPar").value=c.pars.reduce((a,b)=>a+b,0);
@@ -1183,25 +1290,134 @@ function newBlankRound(){
   render();
 }
 
-const STORAGE_KEY = "sg_vs_par_multi_course_v2_8";
-const PREVIOUS_STORAGE_KEYS = ["sg_vs_par_multi_course_v2_7","sg_vs_par_multi_course_v2_6","sg_vs_par_multi_course_v2_5","sg_vs_par_multi_course_v2_4"];
-const PREVIOUS_STORAGE_KEY = "sg_vs_par_multi_course_v2_6";
-const HISTORY_KEY = "sg_vs_par_round_history_v1";
+const LEGACY_STORAGE_KEY = "sg_vs_par_multi_course_v2_6";
+const LEGACY_HISTORY_KEY = "sg_vs_par_round_history_v1";
+const LEGACY_PROFILE_KEY = "sg_vs_par_player_profile_v1";
+const ACTIVE_PLAYER_KEY = "sg_vs_par_active_player_v1";
+const PLAYER_LIST_KEY = "sg_vs_par_player_list_v1";
+let activePlayerName = localStorage.getItem(ACTIVE_PLAYER_KEY) || "";
+function playerSlug(name){ return String(name||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"") || "default"; }
+function playerStorageKey(){ return "sg_vs_par_round_"+playerSlug(activePlayerName); }
+function playerHistoryKey(){ return "sg_vs_par_history_"+playerSlug(activePlayerName); }
+function playerProfileKey(){ return "sg_vs_par_profile_"+playerSlug(activePlayerName); }
+function getPlayerList(){ try{return JSON.parse(localStorage.getItem(PLAYER_LIST_KEY)||"[]");}catch(e){return [];} }
+function rememberPlayer(name){ const n=String(name||"").trim(); if(!n)return; let a=getPlayerList(); if(!a.some(x=>x.toLowerCase()===n.toLowerCase())) a.push(n); localStorage.setItem(PLAYER_LIST_KEY,JSON.stringify(a)); }
+function migrateLegacyToPlayer(){
+  if(!activePlayerName) return;
+  const sk=playerStorageKey(), hk=playerHistoryKey(), pk=playerProfileKey();
+  if(!localStorage.getItem(sk) && localStorage.getItem(LEGACY_STORAGE_KEY)) localStorage.setItem(sk,localStorage.getItem(LEGACY_STORAGE_KEY));
+  if(!localStorage.getItem(hk) && localStorage.getItem(LEGACY_HISTORY_KEY)) localStorage.setItem(hk,localStorage.getItem(LEGACY_HISTORY_KEY));
+  if(!localStorage.getItem(pk) && localStorage.getItem(LEGACY_PROFILE_KEY)) localStorage.setItem(pk,localStorage.getItem(LEGACY_PROFILE_KEY));
+}
+function setPlayerName(v){
+  const n=String(v||"").trim(); if(!n)return;
+  activePlayerName=n; rememberPlayer(n); localStorage.setItem(ACTIVE_PLAYER_KEY,n); migrateLegacyToPlayer();
+  try{ const saved=localStorage.getItem(playerStorageKey()); if(saved){ round=JSON.parse(saved); applyKnownHandicapRating(round); repairRecordedPuttingMismatch(round); } else { round.historyId=null; round.date=""; round.holes.forEach(h=>{h.score=null;h.scoreSource=null;h.recordedPutts=null;h.puttsSource=null;h.shots=[];}); } }catch(e){}
+  render(); renderResults(); document.getElementById("copyStatus").textContent=`Active player: ${n}`;
+}
+
+function showProfileGate(){
+  const gate=document.getElementById("profileGate");
+  if(!gate) return;
+  gate.classList.add("open");
+  document.body.classList.add("profile-locked");
+  setTimeout(()=>{ const el=document.getElementById("setupPlayerName"); if(el) el.focus(); },0);
+}
+function hideProfileGate(){
+  const gate=document.getElementById("profileGate");
+  if(gate) gate.classList.remove("open");
+  document.body.classList.remove("profile-locked");
+}
+function completeProfileSetup(){
+  const nameEl=document.getElementById("setupPlayerName");
+  const handicapEl=document.getElementById("setupHandicap");
+  const err=document.getElementById("setupPlayerNameError");
+  const n=String(nameEl ? nameEl.value : "").trim();
+  if(!n){
+    if(err) err.textContent="Player Name is required before entering scores.";
+    if(nameEl) nameEl.focus();
+    return;
+  }
+  if(err) err.textContent="";
+  setPlayerName(n);
+  if(handicapEl && handicapEl.value!=="") setCurrentHandicap(handicapEl.value);
+  hideProfileGate();
+}
+function requirePlayerProfile(){
+  if(!String(activePlayerName||"").trim()) showProfileGate();
+  else hideProfileGate();
+}
+let STORAGE_KEY = playerStorageKey();
+let HISTORY_KEY = playerHistoryKey();
+let PROFILE_KEY = playerProfileKey();
 let editingShot = null;
 
 
 function showPage(which){
   const entry=document.getElementById("entryPage");
   const results=document.getElementById("resultsPage");
+  const guide=document.getElementById("guidePage");
   const ne=document.getElementById("navEntry");
   const nr=document.getElementById("navResults");
-  const isResults=which==="results";
-  entry.classList.toggle("hidden-page", isResults);
-  results.classList.toggle("hidden-page", !isResults);
-  ne.classList.toggle("active", !isResults);
-  nr.classList.toggle("active", isResults);
-  if(isResults) renderResults();
+  const ng=document.getElementById("navGuide");
+  entry.classList.toggle("hidden-page", which!=="entry");
+  results.classList.toggle("hidden-page", which!=="results");
+  guide.classList.toggle("hidden-page", which!=="guide");
+  ne.classList.toggle("active", which==="entry");
+  nr.classList.toggle("active", which==="results");
+  ng.classList.toggle("active", which==="guide");
+  if(which==="results") renderResults();
+  if(which==="guide") renderTesterFeedback();
   window.scrollTo({top:0,behavior:"smooth"});
+}
+
+
+function feedbackStorageKey(){ return "sg_vs_par_feedback_"+playerSlug(activePlayerName); }
+function getTesterFeedback(){
+  try { return JSON.parse(localStorage.getItem(feedbackStorageKey())||"[]"); } catch(e){ return []; }
+}
+function saveTesterFeedback(){
+  const text=(document.getElementById("feedbackText")?.value||"").trim();
+  const holeRaw=document.getElementById("feedbackHole")?.value||"";
+  const status=document.getElementById("feedbackStatus");
+  if(!text){ if(status) status.textContent="Enter a comment before saving."; return; }
+  const items=getTesterFeedback();
+  items.push({
+    savedAt:new Date().toISOString(),
+    player:activePlayerName||"Player",
+    hole:holeRaw?Number(holeRaw):null,
+    course:round.course||"",
+    date:round.date||"",
+    text
+  });
+  localStorage.setItem(feedbackStorageKey(),JSON.stringify(items));
+  document.getElementById("feedbackText").value="";
+  document.getElementById("feedbackHole").value="";
+  if(status) status.textContent="Feedback saved for "+(activePlayerName||"this player")+".";
+  renderTesterFeedback();
+}
+function renderTesterFeedback(){
+  const el=document.getElementById("feedbackList"); if(!el) return;
+  const items=getTesterFeedback();
+  if(!items.length){ el.innerHTML='<p class="muted">No feedback saved yet.</p>'; return; }
+  el.innerHTML='<h4>Saved feedback</h4>'+items.slice().reverse().map((x,i)=>{
+    const where=[x.course,x.date,x.hole?"Hole "+x.hole:""] .filter(Boolean).join(" • ");
+    return `<div class="note" style="margin-top:8px"><b>${escapeHtml(x.player||"Player")}</b>${where?` — ${escapeHtml(where)}`:""}<br>${escapeHtml(x.text||"")}</div>`;
+  }).join("");
+}
+async function copyTesterFeedback(){
+  const items=getTesterFeedback();
+  const status=document.getElementById("feedbackStatus");
+  if(!items.length){ if(status) status.textContent="No saved feedback to copy."; return; }
+  const text=JSON.stringify({player:activePlayerName||"Player",feedback:items},null,2);
+  try { await navigator.clipboard.writeText(text); if(status) status.textContent="Feedback copied to clipboard."; }
+  catch(e){ if(status) status.textContent="Clipboard unavailable. Your feedback remains saved on this device."; }
+}
+function clearTesterFeedback(){
+  if(!confirm("Clear all saved feedback for "+(activePlayerName||"this player")+"?")) return;
+  localStorage.removeItem(feedbackStorageKey());
+  const status=document.getElementById("feedbackStatus"); if(status) status.textContent="Feedback cleared.";
+  renderTesterFeedback();
 }
 
 const SEEDED_HISTORY = [
@@ -1279,20 +1495,88 @@ const TEE_HANDICAP_RATINGS = {
     "Tee 2": {rating:70.0, slope:122},
     "Van Open Tee 2 - Men Tees": {rating:70.0, slope:122}
   },
+  "McCleery Golf Course": {
+    "Tee 1": {rating:70.6, slope:127},
+    "Tee 2": {rating:67.9, slope:120},
+    "Tee 3": {rating:63.8, slope:108},
+    "Tee 4": {rating:61.5, slope:106},
+    "Van Open - Tee 2 Tees": {rating:67.9, slope:120},
+    "Van Open Tee 2 - Men Tees": {rating:67.9, slope:120}
+  },
   "Morgan Creek Golf Course": {
     "Blue": {rating:71.9, slope:132}
   },
   "Hazelmere Golf Course": {
     "Blue": {rating:70.2, slope:124}
-  },
-  "Burnaby Mountain Golf Course": {
-    "Blue": {rating:70.5, slope:121}
   }
 };
 
 function handicapRatingFor(course,tees){
   const c=TEE_HANDICAP_RATINGS[course];
   return c ? (c[tees] || null) : null;
+}
+
+function applyKnownHandicapRating(r){
+  if(!r) return r;
+  const hr=handicapRatingFor(r.course,r.tees);
+  if(hr){
+    if(r.courseRating===null || r.courseRating===undefined || r.courseRating==="") r.courseRating=hr.rating;
+    if(r.slopeRating===null || r.slopeRating===undefined || r.slopeRating==="") r.slopeRating=hr.slope;
+    if(r.pcc===null || r.pcc===undefined || !Number.isFinite(Number(r.pcc))) r.pcc=0;
+  }
+  return r;
+}
+
+function repairRecordedPuttingMismatch(r){
+  if(!r || !Array.isArray(r.holes)) return false;
+  let changed=false;
+  r.holes.forEach((h,hi)=>{
+    if(h.recordedPutts===null || h.recordedPutts===undefined || !Array.isArray(h.shots)) return;
+    const total=Number(h.recordedPutts);
+    if(!Number.isFinite(total) || total<0) return;
+    const manual=h.shots
+      .filter(s=>!s.autoPutting && s.category==="Putting")
+      .reduce((n,s)=>n+(Number(s.strokesUsed)||1),0);
+    const autos=h.shots.filter(s=>s.autoPutting);
+    const autoCount=autos.reduce((n,s)=>n+(Number(s.strokesUsed)||1),0);
+    if(manual+autoCount===total) return;
+    // Repair only the known grouped-putting mismatch: recorded total putts is
+    // authoritative, so grouped auto-putting must equal the remaining putts.
+    h.shots=h.shots.filter(s=>!s.autoPutting);
+    const remaining=Math.max(0,total-manual);
+    if(remaining>0){
+      const last=h.shots[h.shots.length-1];
+      const startPR=last ? Number(last.afterPR) : null;
+      const bucket=last && last.putt ? last.putt : "31–40 ft";
+      if(Number.isFinite(startPR)){
+        h.shots.push({
+          category:"Putting",dest:"Holed",lie:"",putt:bucket,yards:0,
+          penalty:0,penaltyMode:"none",strokesUsed:remaining,autoPutting:true,
+          beforePR:startPR,afterPR:0,sg:round1(startPR-remaining),
+          label:`${remaining} remaining putt${remaining===1?'':'s'} from ${bucket} (auto; ${total} total)`
+        });
+      }
+    }
+    recalcHole(hi);
+    if(h.scoreSource==="calculated") h.score=strokesUsed(h);
+    changed=true;
+  });
+  return changed;
+}
+
+function refreshHistorySnapshotFromSource(rec){
+  if(!rec || !rec.sourceRound || !Array.isArray(rec.sourceRound.holes)) return rec;
+  const source=rec.sourceRound;
+  applyKnownHandicapRating(source);
+  if(!repairRecordedPuttingMismatch(source)) return rec;
+  const fresh=roundSnapshot(source);
+  const keepId=rec.id;
+  const keepSavedAt=rec.savedAt;
+  Object.assign(rec,fresh);
+  rec.id=keepId;
+  if(keepSavedAt) rec.savedAt=keepSavedAt;
+  rec.sourceRound.historyId=keepId;
+  return rec;
 }
 
 function ensureSeedHistory(arr){
@@ -1319,20 +1603,21 @@ function historySortValue(r){
 
 function getHistory(){
   try{
-    const raw=localStorage.getItem(HISTORY_KEY);
+    const raw=localStorage.getItem(playerHistoryKey());
     let arr=raw ? JSON.parse(raw) : [];
     arr=ensureSeedHistory(Array.isArray(arr) ? arr : []);
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(arr));
+    arr=arr.map(applyKnownHandicapRating).map(refreshHistorySnapshotFromSource);
+    localStorage.setItem(playerHistoryKey(), JSON.stringify(arr));
     return arr;
   }catch(e){
     const seeded=ensureSeedHistory([]);
-    try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(seeded)); }catch(_){}
+    try{ localStorage.setItem(playerHistoryKey(), JSON.stringify(seeded)); }catch(_){}
     return seeded;
   }
 }
 
 function setHistory(arr){
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(arr));
+  localStorage.setItem(playerHistoryKey(), JSON.stringify(arr));
 }
 
 function roundSnapshot(r){
@@ -1354,6 +1639,7 @@ function roundSnapshot(r){
   return {
     id: r.historyId || ("r_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)),
     savedAt: new Date().toISOString(),
+    playerName: activePlayerName || "Player",
     date: r.date || new Date().toISOString().slice(0,10),
     course: r.course || "",
     tees: r.tees || "",
@@ -1576,15 +1862,52 @@ function handicapRecord(history){
   return {eligible,used,index,rule};
 }
 
+function getHandicapProfile(){
+  try{ return JSON.parse(localStorage.getItem(playerProfileKey())||"{}"); }catch(e){ return {}; }
+}
+
+function saveHandicapProfile(p){
+  try{ localStorage.setItem(playerProfileKey(),JSON.stringify(p||{})); }catch(e){}
+}
+
+function renderHandicapProfileControls(){
+  const ne=document.getElementById("playerName"); if(ne) ne.value=activePlayerName;
+  const he=document.getElementById("currentHandicap");
+  const h=getCurrentHandicap();
+  if(he) he.value=h===null?"":h;
+}
+
+function getCurrentHandicap(){
+  try{
+    const p=getHandicapProfile();
+    const v=Number(p.currentHandicap);
+    return Number.isFinite(v) ? Math.round(v*10)/10 : null;
+  }catch(e){ return null; }
+}
+
+function setCurrentHandicap(v){
+  try{
+    const p=getHandicapProfile();
+    if(v==="" || !Number.isFinite(Number(v))) delete p.currentHandicap;
+    else p.currentHandicap=Math.round(Number(v)*10)/10;
+    saveHandicapProfile(p);
+    renderHandicapProfileControls();
+    renderResults();
+  }catch(e){}
+}
+
 function renderHandicap(history){
   const h=handicapRecord(history);
+  const current=getCurrentHandicap();
   if(h.index===null){
     return `<div class="handicap-box">
       <div class="handicap-main">
         <div><div class="insight-label">Estimated WHS Handicap Index</div><div class="handicap-number">—</div>
         <div class="handicap-caption">${h.eligible.length} eligible differential${h.eligible.length===1?"":"s"} · at least 3 are required.</div></div>
+        <div><div class="insight-label">Official / Current Handicap Index</div><div class="handicap-number">${current===null?"—":current.toFixed(1)}</div>
+        <div class="handicap-caption">Entered manually in Handicap Profile.</div></div>
       </div>
-      <div class="detail-note">Add Course Rating and Slope to saved 18-hole rounds to make them handicap-eligible.</div>
+      <div class="detail-note">Known Course Rating and Slope values are filled automatically from the tee library. You can edit them when needed.</div>
     </div>`;
   }
   const usedIds=new Set(h.used.map(r=>r.id));
@@ -1604,6 +1927,11 @@ function renderHandicap(history){
         <div class="insight-label">Estimated WHS Handicap Index</div>
         <div class="handicap-number">${h.index.toFixed(1)}</div>
         <div class="handicap-caption">Based on ${h.eligible.length} eligible 18-hole score differential${h.eligible.length===1?"":"s"}.</div>
+      </div>
+      <div>
+        <div class="insight-label">Official / Current Handicap Index</div>
+        <div class="handicap-number">${current===null?"—":current.toFixed(1)}</div>
+        <div class="handicap-caption">${current===null?"Enter it in Handicap Profile.":`App estimate is ${(h.index-current)>=0?"+":""}${(h.index-current).toFixed(1)} vs current.`}</div>
       </div>
       <div class="muted">Uses lowest ${h.rule.use} differential${h.rule.use===1?"":"s"}${adjText}.</div>
     </div>
@@ -1769,6 +2097,109 @@ function closeRoundDetail(ev){
   document.body.style.overflow="";
 }
 
+
+const PUTT_BUCKET_MID={"1–2 ft":1.5,"3–4 ft":3.5,"5–6 ft":5.5,"7–9 ft":8,"10–14 ft":12,"15–20 ft":17.5,"21–30 ft":25.5,"31–40 ft":35.5,"41–55 ft":48,"56–75 ft":65.5,"76+ ft":82};
+const PUTT_BUCKETS=["1–2 ft","3–4 ft","5–6 ft","7–9 ft","10–14 ft","15–20 ft","21–30 ft","31–40 ft","41–55 ft","56–75 ft","76+ ft"];
+function bucketForFeet(x){
+  if(x<=2)return"1–2 ft"; if(x<=4)return"3–4 ft"; if(x<=6)return"5–6 ft"; if(x<=9)return"7–9 ft";
+  if(x<=14)return"10–14 ft"; if(x<=20)return"15–20 ft"; if(x<=30)return"21–30 ft"; if(x<=40)return"31–40 ft";
+  if(x<=55)return"41–55 ft"; if(x<=75)return"56–75 ft"; return"76+ ft";
+}
+function firstGreenShot(h){ return (h.shots||[]).find(s=>s.dest==="Green"); }
+function teeShot(h){ return (h.shots||[]).find(s=>!s.autoPutting); }
+function roundFunStats(rec){
+  const r=rec&&rec.sourceRound;
+  if(!r||!Array.isArray(r.holes)) return null;
+  let fw=0,fwN=0,gir=0,putts=0,one=0,three=0,bog=0,dbl=0,worse=0,bird=0,parc=0;
+  let drives=[], prox=[], proxPar={3:[],4:[],5:[]}, bunkerEntries=0,bunkerSaves=0,bunkerChances=0, up=0,upChances=0;
+  let longestMade=null, puttBy={};
+  PUTT_BUCKETS.forEach(b=>puttBy[b]={n:0,putts:0,made:0});
+  r.holes.forEach(h=>{
+    const score=Number(h.score), par=Number(h.par);
+    if(score&&par){const d=score-par;if(d===-1)bird++;else if(d===0)parc++;else if(d===1)bog++;else if(d===2)dbl++;else if(d>=3)worse++;}
+    const tee=teeShot(h);
+    if((par===4||par===5)&&tee){
+      fwN++;
+      if(tee.lie==="Fairway / First Cut"||tee.lie==="Fairway / Fringe"||tee.lie==="Fairway")fw++;
+      if(tee.dest==="Full Shot"&&Number.isFinite(Number(tee.yards))){
+        const d=Number(h.yards)-Number(tee.yards); if(d>=0)drives.push(d);
+      }
+    }
+    const gs=firstGreenShot(h);
+    let strokesToGreen=0, reached=false;
+    for(const s of (h.shots||[])){
+      if(s.autoPutting) break;
+      strokesToGreen+=(Number(s.strokesUsed)||1)+(Number(s.penalty)||0);
+      if(s.dest==="Green"||s.dest==="Holed"){reached=true;break;}
+    }
+    const isGIR=reached && strokesToGreen<=par-2;
+    if(isGIR)gir++;
+    if(gs&&gs.putt){
+      prox.push(gs.putt); if(proxPar[par])proxPar[par].push(gs.putt);
+      const n=Number(h.recordedPutts);
+      if(n){putts+=n;if(n===1)one++;if(n>=3)three++; const p=puttBy[gs.putt]; if(p){p.n++;p.putts+=n;if(n===1)p.made++;}}
+      if(n===1 && (!longestMade || (PUTT_BUCKET_MID[gs.putt]||0)>(PUTT_BUCKET_MID[longestMade]||0))) longestMade=gs.putt;
+    } else if(Number(h.recordedPutts)){ putts+=Number(h.recordedPutts); }
+    const shots=h.shots||[];
+    shots.forEach((s,i)=>{
+      if(s.lie==="Bunker"||s.lie==="Greenside Bunker"||s.lie==="Fairway Bunker"){
+        bunkerEntries++;
+        // A bunker save chance is a bunker position inside 50 yd; save if hole completed in <=2 strokes from next shot onward.
+        if(Number(s.yards)<=50){
+          bunkerChances++;
+          const remaining=shots.slice(i+1).reduce((n,x)=>n+(Number(x.strokesUsed)||1)+(Number(x.penalty)||0),0);
+          if(remaining<=2)bunkerSaves++;
+        }
+      }
+    });
+    if(!isGIR){
+      const idx=shots.findIndex(s=>s.dest==="Full Shot" && Number(s.yards)<=50);
+      if(idx>=0){
+        upChances++;
+        const used=shots.slice(idx+1).reduce((n,x)=>n+(Number(x.strokesUsed)||1)+(Number(x.penalty)||0),0);
+        if(used<=2)up++;
+      }
+    }
+  });
+  drives.sort((a,b)=>b-a);
+  const five=drives.slice(0,5);
+  const avg5=five.length?five.reduce((a,b)=>a+b,0)/five.length:null;
+  const typical=a=>{
+    const vals=a.map(b=>PUTT_BUCKET_MID[b]).filter(Number.isFinite);
+    return vals.length?bucketForFeet(vals.reduce((x,y)=>x+y,0)/vals.length):"—";
+  };
+  return {fw,fwN,gir,drives,avg5,prox,proxPar,bog,dbl,worse,bird,parc,up,upChances,bunkerEntries,bunkerSaves,bunkerChances,putts,one,three,longestMade,puttBy,typical};
+}
+function pct(a,b){return b?Math.round(a/b*100)+"%":"—";}
+function renderRoundStats(rec){
+  const s=roundFunStats(rec);
+  if(!s)return `<div class="note">Detailed round stats will appear for newly saved rounds that contain full shot data.</div>`;
+  const proxRows=[3,4,5].map(p=>`<tr><td>Par ${p}</td><td>${s.proxPar[p].length?s.typical(s.proxPar[p]):"—"}</td><td class="num">${s.proxPar[p].length}</td></tr>`).join("");
+  const puttRows=PUTT_BUCKETS.map(b=>{const x=s.puttBy[b];if(!x.n)return"";return `<tr><td>${b}</td><td class="num">${x.n}</td><td class="num">${(x.putts/x.n).toFixed(2)}</td><td class="num">${pct(x.made,x.n)}</td></tr>`}).join("");
+  return `
+    <div class="results-hero">
+      <div class="metric">Fairways<b>${s.fw}/${s.fwN}</b><span class="muted">${pct(s.fw,s.fwN)}</span></div>
+      <div class="metric">Greens in Regulation<b>${s.gir}/18</b><span class="muted">${pct(s.gir,18)}</span></div>
+      <div class="metric">Longest Drive<b>${s.drives.length?Math.round(s.drives[0])+" yd":"—"}</b><span class="muted">Top-5 avg ${s.avg5?Math.round(s.avg5)+" yd":"—"}</span></div>
+      <div class="metric">Putting<b>${s.putts}</b><span class="muted">${(s.putts/18).toFixed(2)} per hole · ${s.three} three-putt${s.three===1?"":"s"}</span></div>
+      <div class="metric">Up &amp; Down<b>${s.up}/${s.upChances}</b><span class="muted">${pct(s.up,s.upChances)}</span></div>
+      <div class="metric">Bunker Saves<b>${s.bunkerSaves}/${s.bunkerChances}</b><span class="muted">${pct(s.bunkerSaves,s.bunkerChances)} · ${s.bunkerEntries} bunker position${s.bunkerEntries===1?"":"s"}</span></div>
+      <div class="metric">Typical Proximity<b>${s.prox.length?s.typical(s.prox):"—"}</b><span class="muted">First putt range after reaching green</span></div>
+      <div class="metric">Longest Putt Made<b>${s.longestMade||"—"}</b><span class="muted">Reported as entered range</span></div>
+    </div>
+    <div class="trend-grid">
+      <div><h4>Scoring</h4><table class="compare-table"><tbody>
+        <tr><td>Birdies</td><td class="num">${s.bird}</td></tr><tr><td>Pars</td><td class="num">${s.parc}</td></tr>
+        <tr><td>Bogeys</td><td class="num">${s.bog}</td></tr><tr><td>Double bogeys</td><td class="num">${s.dbl}</td></tr>
+        <tr><td>Triple bogey or worse</td><td class="num">${s.worse}</td></tr>
+      </tbody></table></div>
+      <div><h4>Proximity by Hole Par</h4><table class="compare-table"><thead><tr><th>Hole</th><th>Typical first-putt range</th><th class="num">Greens</th></tr></thead><tbody>${proxRows}</tbody></table></div>
+    </div>
+    <h4>Putting by Starting Distance</h4>
+    <div class="muted">Uses the distance ranges you entered—no false exact-distance precision.</div>
+    <table class="compare-table"><thead><tr><th>Starting range</th><th class="num">Holes</th><th class="num">Avg putts</th><th class="num">1-putt rate</th></tr></thead><tbody>${puttRows||'<tr><td colspan="4">No putting-range data.</td></tr>'}</tbody></table>`;
+}
+
 function renderResults(){
   const root=document.getElementById("resultsContent");
   if(!root) return;
@@ -1830,6 +2261,10 @@ function renderResults(){
       <div class="metric">Rounds in View<b>${sample.length}</b><span class="muted">${history.length} total saved</span></div>
     </div>
 
+    <h3 style="margin:22px 0 4px">Round Stats &amp; Highlights</h3>
+    <div class="muted">Useful golf stats calculated automatically from the shot data you already entered.</div>
+    ${renderRoundStats(last)}
+
     <div class="import-note">
       Three earlier calibration rounds are preloaded so the Results page is populated immediately:
       Fraserview 90 (+18), Morgan Creek 84 (+12), and Hazelmere 88 (+16).
@@ -1884,7 +2319,7 @@ function renderResults(){
 function saveProgress(showMessage=true){
   syncRoundHeader();
   try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(round));
+    localStorage.setItem(playerStorageKey(), JSON.stringify(round));
     if(showMessage){
       document.getElementById("copyStatus").textContent="Progress saved in this browser.";
     }
@@ -1895,35 +2330,17 @@ function saveProgress(showMessage=true){
   }
 }
 
-
-function getPreviousSavedRound(){
-  for(const key of PREVIOUS_STORAGE_KEYS){
-    const raw=localStorage.getItem(key);
-    if(raw) return raw;
-  }
-  return null;
-}
-
-function migrateKnownRating(r){
-  if(!r) return r;
-  const hr=handicapRatingFor(r.course,r.tees);
-  if(hr && (r.courseRating==null || r.slopeRating==null)){
-    r.courseRating=hr.rating;
-    r.slopeRating=hr.slope;
-    r.pcc=Number(r.pcc)||0;
-  }
-  return r;
-}
-
 function restoreProgress(){
   try{
-    const raw=localStorage.getItem(STORAGE_KEY) || getPreviousSavedRound();
+    const raw=localStorage.getItem(playerStorageKey());
     if(!raw){
       document.getElementById("copyStatus").textContent="No saved round was found in this browser.";
       return;
     }
-    round=migrateKnownRating(JSON.parse(raw));
+    round=JSON.parse(raw);
     if(round.date===undefined) round.date="";
+    applyKnownHandicapRating(round);
+    repairRecordedPuttingMismatch(round);
     render();
     document.getElementById("copyStatus").textContent="Saved round restored.";
   }catch(e){
@@ -1934,8 +2351,10 @@ function restoreProgress(){
 function autosave(){
   try{
     syncRoundHeader();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(round));
+    localStorage.setItem(playerStorageKey(), JSON.stringify(round));
   }catch(e){}
+
+  try{ markSaved(); }catch(e){}
 }
 
 function syncRoundHeader(){
@@ -1988,41 +2407,20 @@ function importJSON(){
   f.onchange=e=>{
     const file=e.target.files[0]; if(!file)return;
     const r=new FileReader();
-    r.onload=()=>{ round=JSON.parse(r.result); autosave(); render(); };
+    r.onload=()=>{ round=JSON.parse(r.result); applyKnownHandicapRating(round); repairRecordedPuttingMismatch(round); autosave(); render(); };
     r.readAsText(file);
   };
   f.click();
 }
-
-function migrateCompletedLiveRoundToHistory(){
-  try{
-    if(!round || !Array.isArray(round.holes) || round.holes.length!==18) return;
-    const complete=round.holes.every(h=>Number(h.score)>0);
-    if(!complete) return;
-    if(!round.historyId) return;
-    const history=getHistory();
-    if(history.some(r=>r.id===round.historyId)) return;
-    const snap=roundSnapshot(round);
-    if(!snap) return;
-    snap.id=round.historyId;
-    history.push(snap);
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-  }catch(_){}
-}
-
 try{
-  const saved=localStorage.getItem(STORAGE_KEY) || getPreviousSavedRound();
+  if(activePlayerName){ rememberPlayer(activePlayerName); migrateLegacyToPlayer(); }
+  const saved=localStorage.getItem(playerStorageKey());
   if(saved){
-    round=migrateKnownRating(JSON.parse(saved));
+    round=JSON.parse(saved);
     if(round.date===undefined) round.date="";
-    const hr=handicapRatingFor(round.course,round.tees);
-    if(hr && (round.courseRating==null || round.slopeRating==null)){
-      round.courseRating=hr.rating;
-      round.slopeRating=hr.slope;
-      round.pcc=Number(round.pcc)||0;
-      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(round)); }catch(_){}
-    }
-    migrateCompletedLiveRoundToHistory();
+    applyKnownHandicapRating(round);
+    repairRecordedPuttingMismatch(round);
+    localStorage.setItem(playerStorageKey(), JSON.stringify(round));
     render();
   }else{
     newFraserviewRound();
@@ -2030,11 +2428,7 @@ try{
 }catch(e){
   newFraserviewRound();
 }
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-}
+requirePlayerProfile();
 </script>
 </body>
 </html>
