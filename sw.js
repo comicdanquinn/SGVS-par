@@ -1,5 +1,5 @@
-const CACHE_NAME = "sg-vs-par-v6-3-7";
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE_NAME = "sg-vs-par-v6-3-9";
+const ASSETS = ["./", "./index.html", "./index(1).html", "./metric_patch.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
