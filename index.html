@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SG vs Par Multi-Course Round Entry v6.2</title>
+<title>SG vs Par Multi-Course Round Entry v6.3 Percentage Model</title>
 <style>
   body { font-family: Arial, sans-serif; margin: 0; background:#f6f7f5; color:#222; }
   header { background:#173d2d; color:white; padding:18px 22px; }
@@ -97,47 +97,41 @@
   .profile-gate-grid input { width:100%; box-sizing:border-box; font-size:16px; padding:11px 12px; }
   .profile-required { font-size:11px; color:#8a1d1d; margin-top:4px; min-height:15px; }
   body.profile-locked { overflow:hidden; }
-
-/* v6.2 mobile field-test additions */
-.mobile-test-bar{
-  position:sticky; top:0; z-index:9999;
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  padding:8px 12px;
-  background:#f7f7f2; border-bottom:1px solid #d8ddd6;
-  font-size:12px; line-height:1.2;
-}
-#saveStatus{white-space:nowrap}
-@media (max-width:700px){
-  body{font-size:16px}
-  button,select,input,textarea{min-height:44px;font-size:16px}
-  .card{border-radius:14px}
-  .mobile-test-bar{font-size:11px}
-}
-
 </style>
 
-<meta name="theme-color" content="#0f5132">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#173d2d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="SG vs Par">
-<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-
+<style>
+  @media (max-width: 700px) {
+    .wrap { margin-top:12px; padding-left:10px; padding-right:10px; }
+    .card { padding:13px; }
+    input, select, button { font-size:16px; min-height:44px; }
+    button.small { min-height:38px; font-size:14px; }
+    .row { gap:9px; }
+    .shot-form .row > div { min-width: min(100%, 190px); flex:1 1 190px; }
+    .shot-form .row > button { flex:1 1 140px; }
+    .topnav { position:sticky; top:0; z-index:50; background:#f6f7f5; padding-top:8px; padding-bottom:8px; margin-top:0; }
+    .topnav button { flex:1 1 30%; }
+    table { display:block; overflow-x:auto; white-space:nowrap; }
+  }
+  #saveStatus { font-size:12px; color:#5f6e64; margin-top:8px; min-height:16px; }
+</style>
 </head>
 <body>
-<div class="mobile-test-bar">
-  <strong>SG vs Par v6.2 • Mobile Field Test</strong>
-  <span id="saveStatus">Ready</span>
-</div>
 <header>
 <h1>Strokes Gained vs Par</h1>
+<div style="font-size:12px;opacity:.9;margin-top:4px"><b>Live Test Build: v6.3.8</b></div>
 <div class="sub" style="line-height:1.55;margin-top:8px">
 <b>Quick Start:</b>
-After each shot enter <b>Distance Remaining + Lie</b>.
-Choose the lie that best describes where the ball finished.
-On the green, enter the <b>first-putt distance range + total putts</b>:
-1–2 ft · 3–4 ft · 5–6 ft · 7–9 ft · 10–14 ft · then larger ranges.
-SG vs Par calculates Driving, Approach, Short Game and Putting automatically.
+After every off-green shot, enter <b>where the ball finished</b>: the distance remaining and the <b>one resulting position</b> that best describes the shot — Fairway / Good Lie, Light Rough, Deep Rough, Bunker, Restricted, or Recovery Only. Disadvantages never stack.
+SG vs Par compares the shot with the <b>par-job assigned to that stroke</b>. Completing 100% of one job is neutral (0.0 SGvP); completing less loses a percentage of a stroke, while completing part of the next job can gain strokes. Par 3, Par 4 and Par 5 jobs are calculated automatically from the hole and the position inherited from previous shots.
+Once the ball reaches the green, enter the <b>first-putt distance + total putts</b>. Putting uses the 0.1 finishing scale: &lt;3 ft · 3–4 ft · 5 ft · 6 ft · 7 ft · 8–9 ft · 10–12 ft · 13–15 ft · 16–18 ft · 19–25 ft · 26–35 ft · 36–50 ft · 51–70 ft · 71+ ft.
+The app assigns Driving, Approach, Short Game and Putting automatically. <b>Short Game begins at 60 yards and in.</b> Penalties are charged to the shot that created them.
+Use <b>+ Start New Round</b> whenever you begin another round — even if you are playing the same course and tees again. Your saved Results/history are kept.
 Hole yardage can be adjusted when today’s tee or pin position is noticeably different; small changes are only marginally important.
 </div>
 </header>
@@ -176,27 +170,27 @@ Hole yardage can be adjusted when today’s tee or pin position is noticeably di
 <div class="note">Player Name is required during first-time setup before any scores can be entered. After that, the profile stays active on this device. Each player gets a separate saved round, Results history, handicap profile, You vs You trends, and statistics. To switch golfers later, change the Player Name to an existing profile name or enter a new name.</div>
 </div>
 <div class="card">
-<h2 style="margin-top:0">Round Setup</h2>
+<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0">Round Setup</h2><button class="primary" onclick="startNewRound()">+ Start New Round</button></div>
 <div class="row">
 <div><label>Course</label>
 <select id="course" onchange="onCourseSelectionChange()">
-<option value="Fraserview Golf Course">Fraserview Golf Course</option>
-<option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
-<option value="Northview Ridge Course">Northview — Ridge Course</option>
-<option value="Northview Canal Course">Northview — Canal Course</option>
-<option value="University Golf Club (UBC)">University Golf Club (UBC)</option>
-<option value="Langara Golf Course">Langara Golf Course</option>
-<option value="McCleery Golf Course">McCleery Golf Course</option>
 <option value="Burnaby Mountain Golf Course">Burnaby Mountain Golf Course</option>
-<option value="Riverway Golf Course">Riverway Golf Course</option>
-<option value="Northlands Golf Course">Northlands Golf Course</option>
-<option value="Mayfair Lakes Golf &amp; Country Club">Mayfair Lakes Golf &amp; Country Club</option>
-<option value="Kings Links Golf Course">Kings Links Golf Course</option>
+<option value="Fraserview Golf Course">Fraserview Golf Course</option>
 <option value="Hazelmere Golf Course">Hazelmere Golf Course</option>
-<option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
-<option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
+<option value="Kings Links Golf Course">Kings Links Golf Course</option>
+<option value="Langara Golf Course">Langara Golf Course</option>
+<option value="Mayfair Lakes Golf &amp; Country Club">Mayfair Lakes Golf &amp; Country Club</option>
+<option value="McCleery Golf Course">McCleery Golf Course</option>
 <option value="Meadow Gardens Golf Club">Meadow Gardens Golf Club</option>
+<option value="Morgan Creek Golf Course">Morgan Creek Golf Course</option>
+<option value="Northlands Golf Course">Northlands Golf Course</option>
+<option value="Northview Canal Course">Northview — Canal Course</option>
+<option value="Northview Ridge Course">Northview — Ridge Course</option>
+<option value="Peace Portal Golf Course">Peace Portal Golf Course</option>
 <option value="Redwoods Golf Course">Redwoods Golf Course</option>
+<option value="Riverway Golf Course">Riverway Golf Course</option>
+<option value="Surrey Golf Club — Main Course">Surrey Golf Club — Main Course</option>
+<option value="University Golf Club (UBC)">University Golf Club (UBC)</option>
 </select>
 </div>
 <div><label>Starting Tees</label>
@@ -233,6 +227,7 @@ Hole yardage can be adjusted when today’s tee or pin position is noticeably di
 <button onclick="importJSON()">Import Round JSON</button>
 <input accept=".json" class="hidden" id="importFile" type="file">
 <div class="note" id="copyStatus"></div>
+<div id="saveStatus" aria-live="polite">Not yet saved this session.</div>
 <textarea class="hidden" id="roundDataBox" style="width:100%;height:180px;margin-top:10px;font-family:monospace;font-size:12px"></textarea>
 </input></div>
 
@@ -259,112 +254,45 @@ Hole yardage can be adjusted when today’s tee or pin position is noticeably di
 </div>
 </div>
 <div class="page hidden-page" id="guidePage">
-
-
-
-
-
-
-
-
 <div class="card">
-<h2 style="margin-top:0">How It’s Calculated</h2>
-<p class="muted">SG vs Par uses the yardage and putting ranges you enter, then applies the matching Position Rating (PR) and lie/access deduction automatically. You do not need to do any math while entering a round.</p>
-</div><div class="card">
-<h3 style="margin-top:0">How a Shot Is Evaluated</h3>
-<p><b>SGvP = PR before − 1 − PR after.</b> In plain language: the shot gets credit for how much it improves the hole position after spending one stroke. Penalty strokes are counted once, and the shot that created the trouble owns the consequence.</p>
-</div><div class="card">
-<h3 style="margin-top:0">Putting PR</h3>
-<p>Putting is evaluated from the original starting distance and the total number of putting strokes used by SGvP, including a putt from the fringe when it is entered as Puttable.</p>
-<table class="compare-table">
-<thead><tr><th>Starting putt distance</th><th class="num">Putting PR</th><th class="num">2-putt SGvP</th></tr></thead>
-<tbody>
-<tr><td>1–2 ft</td><td class="num">1.0</td><td class="num">−1.0</td></tr>
-<tr><td>3–4 ft</td><td class="num">1.1</td><td class="num">−0.9</td></tr>
-<tr><td>5–6 ft</td><td class="num">1.3</td><td class="num">−0.7</td></tr>
-<tr><td>7–9 ft</td><td class="num">1.5</td><td class="num">−0.5</td></tr>
-<tr><td>10–14 ft</td><td class="num">1.7</td><td class="num">−0.3</td></tr>
-<tr><td>15–20 ft</td><td class="num">1.8</td><td class="num">−0.2</td></tr>
-<tr><td>21–30 ft</td><td class="num">1.9</td><td class="num">−0.1</td></tr>
-<tr><td>31–40 ft</td><td class="num">2.0</td><td class="num">0.0</td></tr>
-<tr><td>41–55 ft</td><td class="num">2.1</td><td class="num">+0.1</td></tr>
-<tr><td>56–75 ft</td><td class="num">2.2</td><td class="num">+0.2</td></tr>
-<tr><td>76+ ft</td><td class="num">2.3</td><td class="num">+0.3</td></tr>
-</tbody>
-</table>
-<div class="note"><b>Formula:</b> Putting SGvP = Starting Putting PR − Total Putting Strokes.</div>
-</div><div class="card">
-<h3 style="margin-top:0">Short Game &amp; Approach Distance PR</h3>
-<p>Every off-green position uses the same distance-remaining PR buckets. The 50-yard line changes only the reporting category, not the scoring value.</p>
-<table class="compare-table">
-<thead><tr><th>Distance remaining</th><th class="num">Base PR</th><th>Reported category</th></tr></thead>
-<tbody>
-<tr><td>1–4 yd off green</td><td class="num">2.2</td><td>Short Game</td></tr>
-<tr><td>5–9 yd</td><td class="num">2.3</td><td>Short Game</td></tr>
-<tr><td>10–14 yd</td><td class="num">2.4</td><td>Short Game</td></tr>
-<tr><td>15–25 yd</td><td class="num">2.5</td><td>Short Game</td></tr>
-<tr><td>26–40 yd</td><td class="num">2.6</td><td>Short Game</td></tr>
-<tr><td>41–50 yd</td><td class="num">2.7</td><td>Short Game</td></tr>
-<tr><td>51–75 yd</td><td class="num">2.7</td><td>Approach</td></tr>
-<tr><td>76–100 yd</td><td class="num">2.8</td><td>Approach</td></tr>
-<tr><td>101–125 yd</td><td class="num">2.9</td><td>Approach</td></tr>
-<tr><td>126–150 yd</td><td class="num">3.0</td><td>Approach</td></tr>
-<tr><td>151–155 yd</td><td class="num">3.0</td><td>Approach</td></tr>
-<tr><td>156–170 yd</td><td class="num">3.1</td><td>Approach</td></tr>
-<tr><td>171–180 yd</td><td class="num">3.2</td><td>Approach</td></tr>
-<tr><td>181–190 yd</td><td class="num">3.3</td><td>Approach</td></tr>
-<tr><td>191–200 yd</td><td class="num">3.4</td><td>Approach</td></tr>
-<tr><td>201–210 yd</td><td class="num">3.5</td><td>Approach</td></tr>
-<tr><td>211–220 yd</td><td class="num">3.6</td><td>Approach</td></tr>
-<tr><td>221–226 yd</td><td class="num">3.7</td><td>Approach</td></tr>
-<tr><td>227–232 yd</td><td class="num">3.8</td><td>Approach</td></tr>
-<tr><td>233–260 yd</td><td class="num">4.0</td><td>Approach</td></tr>
-<tr><td>261–290 yd</td><td class="num">4.2</td><td>Approach</td></tr>
-<tr><td>291–325 yd</td><td class="num">4.4</td><td>Approach</td></tr>
-<tr><td>326–400 yd</td><td class="num">4.7</td><td>Approach</td></tr>
-<tr><td>401+ yd</td><td class="num">5.0</td><td>Approach</td></tr>
-</tbody>
-</table>
-<div class="note"><b>Core rule:</b> if a shot finishes in the same PR state it started from, it loses 1.0 stroke. Moving into a better PR state reduces that loss or creates a gain.</div>
-</div><div class="card">
-<h3 style="margin-top:0">Quick Examples</h3>
-<table class="compare-table">
-<thead><tr><th>Example</th><th>PR change</th><th class="num">SGvP</th></tr></thead>
-<tbody>
-<tr><td>Par 4 tee shot leaves 140 yd, Fairway / First Cut</td><td>4.0 → 3.0</td><td class="num">0.0</td></tr>
-<tr><td>Par 4 tee shot leaves 190 yd, Fairway / First Cut</td><td>4.0 → 3.3</td><td class="num">−0.3</td></tr>
-<tr><td>Par 4 tee shot leaves 100 yd, Fairway / First Cut</td><td>4.0 → 2.8</td><td class="num">+0.2</td></tr>
-<tr><td>20 yd short-game shot finishes 7–9 ft</td><td>2.5 → 1.5</td><td class="num">0.0</td></tr>
-<tr><td>15–20 ft starting putt, 3 putts</td><td>Putting PR 1.8</td><td class="num">−1.2</td></tr>
-<tr><td>Stroke &amp; Distance</td><td>Returns to prior position</td><td class="num">−2.0</td></tr>
-</tbody></table>
-<div class="note">Every example uses the same rule: SGvP = PR before − 1 − PR after. Distance remaining determines the bucket; lie/access then adjusts the resulting PR.</div>
-</div><div class="card">
-<h3 style="margin-top:0">Lie / Access Adjustment</h3>
-<table class="compare-table">
-<thead><tr><th>Created lie or access</th><th class="num">Added PR difficulty</th></tr></thead>
-<tbody>
-<tr><td>Fairway / First Cut</td><td class="num">+0.0</td></tr>
-<tr><td>Light Rough</td><td class="num">+0.1</td></tr>
-<tr><td>Deep Rough</td><td class="num">+0.2</td></tr><tr><td>Bunker</td><td class="num">+0.2</td></tr>
-<tr><td>Restricted</td><td class="num">+0.5</td></tr>
-<tr><td>Recovery Only</td><td class="num">+1.0</td></tr>
-</tbody>
-</table>
-<div class="note">The same five states are used everywhere. Distance sets the base PR; lie/access adds difficulty to the position created.</div>
-</div><div class="card">
-<h3 style="margin-top:0">Tester Feedback</h3>
-<p class="muted">During testing, save a comment here whenever something feels confusing, unfair, or especially useful. Feedback is stored separately for the active player on this device.</p>
-<div class="row">
-<div><label>Hole (optional)</label><input id="feedbackHole" max="18" min="1" placeholder="e.g. 10" style="width:100px" type="number"/></div>
-<div style="flex:1;min-width:260px"><label>Feedback</label><textarea id="feedbackText" placeholder="What felt confusing, inaccurate, useful, or difficult to enter?" style="width:100%;height:90px"></textarea></div>
+<h2 style="margin-top:0">How SG vs Par Is Scored</h2>
+<p><b>SG vs Par measures how much of the work required to make par was created by each shot.</b></p>
+<p class="muted">Par is the benchmark—not the distance of the shot. Distance is used to measure how much of the shot's assigned job was completed. Every shot inherits the position created by the shots before it.</p>
+<div class="note"><b>Core accounting:</b> 100% of one assigned job = 1.0 stroke of par created = 0.0 SGvP. 70% completed = −0.3. 50% = −0.5. Less than 10% = −1.0. Once a shot completes 100% of its own job, extra progress earns credit for completing part of the next par-job.</div>
 </div>
-<button class="primary" onclick="saveTesterFeedback()">Save Feedback</button>
-<button onclick="copyTesterFeedback()">Copy My Feedback</button>
-<button onclick="clearTesterFeedback()">Clear My Feedback</button>
-<div class="note" id="feedbackStatus"></div>
-<div id="feedbackList"></div>
-</div></div>
+<div class="card">
+<h3 style="margin-top:0">Putting: the finishing anchor</h3>
+<p>Putting is the absolute finishing ruler for the model. The ranges are based on the expected-putts curve rounded into 0.1 PR steps. <b>PR 2.0 (26–35 ft) is the neutral two-putt position.</b></p>
+<table class="compare-table"><thead><tr><th>Starting putt distance</th><th class="num">PR</th></tr></thead><tbody>
+<tr><td>&lt;3 ft</td><td class="num">1.0</td></tr><tr><td>3–4 ft</td><td class="num">1.1</td></tr><tr><td>5 ft</td><td class="num">1.2</td></tr><tr><td>6 ft</td><td class="num">1.3</td></tr><tr><td>7 ft</td><td class="num">1.4</td></tr><tr><td>8–9 ft</td><td class="num">1.5</td></tr><tr><td>10–12 ft</td><td class="num">1.6</td></tr><tr><td>13–15 ft</td><td class="num">1.7</td></tr><tr><td>16–18 ft</td><td class="num">1.8</td></tr><tr><td>19–25 ft</td><td class="num">1.9</td></tr><tr><td>26–35 ft</td><td class="num">2.0</td></tr><tr><td>36–50 ft</td><td class="num">2.1</td></tr><tr><td>51–70 ft</td><td class="num">2.2</td></tr><tr><td>71+ ft</td><td class="num">2.3</td></tr>
+</tbody></table>
+<div class="note"><b>Putting SGvP = Starting Putting PR − Total Putts.</b></div>
+</div>
+<div class="card"><h3 style="margin-top:0">Par 3 — one full-shot job</h3>
+<p>The tee shot's job is the hole yardage <b>minus the neutral two-putt distance (about 10–11 yards / 30–32 feet)</b>. Reaching the 26–35 ft putting range completes 100% of the full-shot job and is neutral. If only 70% of that job is completed, the tee shot is −0.3. Once the shot reaches the green inside the neutral range, the putting PR scale measures the extra par it created.</p>
+<div class="note"><b>Neutral path:</b> Tee/Approach → PR 2.0 → two putts = Par 3.</div></div>
+<div class="card"><h3 style="margin-top:0">Par 4 — drive, approach, two putts</h3>
+<p>The neutral tee job is the established hole-relative driving percentage: <b>60–64.9% of the hole advanced = 0.0</b>. The approach inherits whatever the drive created. Its neutral job is to move from that inherited position to the putting position corresponding to one full stroke of par created. From a neutral drive, that means reaching <b>PR 2.0 / 26–35 ft</b>.</p>
+<table class="compare-table"><thead><tr><th>Par-4 drive % advanced</th><th class="num">SGvP before resulting-position disadvantage</th></tr></thead><tbody>
+<tr><td>75%+</td><td class="num">+0.3</td></tr><tr><td>70–74.9%</td><td class="num">+0.2</td></tr><tr><td>65–69.9%</td><td class="num">+0.1</td></tr><tr><td>60–64.9%</td><td class="num">0.0</td></tr><tr><td>55–59.9%</td><td class="num">−0.1</td></tr><tr><td>50–54.9%</td><td class="num">−0.2</td></tr><tr><td>45–49.9%</td><td class="num">−0.3</td></tr><tr><td>40–44.9%</td><td class="num">−0.4</td></tr><tr><td>35–39.9%</td><td class="num">−0.5</td></tr><tr><td>30–34.9%</td><td class="num">−0.6</td></tr><tr><td>25–29.9%</td><td class="num">−0.7</td></tr><tr><td>20–24.9%</td><td class="num">−0.8</td></tr><tr><td>10–19.9%</td><td class="num">−0.9</td></tr><tr><td>&lt;10%</td><td class="num">−1.0</td></tr>
+</tbody></table>
+<div class="note"><b>Neutral path:</b> Drive → Approach → PR 2.0 → two putts = Par 4.</div></div>
+<div class="card"><h3 style="margin-top:0">Par 5 — divide the hole into two 50% jobs</h3>
+<p>A neutral Par-5 pathway is easiest to think of as <b>two halves of the hole</b>:</p>
+<p><b>Shot 1:</b> complete the first 50% of the hole.<br>
+<b>Shots 2 + 3:</b> together complete the remaining 50% of the hole, finishing at the neutral putting position <b>PR 2.0 / about 26–35 ft</b> rather than at the cup.</p>
+<div class="note"><b>Example — 500-yard Par 5:</b> Shot 1's neutral job is the first 250 yards. That leaves 250 yards for <b>Shots 2 + 3 together</b> to complete. How much of that remaining 50% each shot completes determines how much par each shot creates. The final full shot finishes the job at roughly 30–32 feet, then two neutral putts complete the Par 5.</div>
+<p>Each shot inherits the SG vs Par position created by the shots before it. A previous loss is <b>not reset</b> by the next shot. If Shot 2 completes more of the remaining 50% than required for one neutral par-job, it begins completing Shot 3's job and can earn positive SGvP. If it completes less, Shot 3 inherits that unfinished work.</p>
+<p>If a shot reaches the green, the <b>putting PR scale becomes the finishing ruler</b>. A better-than-neutral putting position can therefore create additional par value.</p>
+<div class="note"><b>Neutral Par-5 path:</b> Shot 1 completes 50% of the hole → Shots 2 + 3 complete the other 50% → two putts = Par 5.</div></div>
+<div class="card"><h3 style="margin-top:0">Resulting Position Disadvantage</h3>
+<p>Only <b>one</b> disadvantage can apply. Choose the dominant problem the shot created. It reduces the amount of useful par created by that shot; disadvantages never stack.</p>
+<table class="compare-table"><thead><tr><th>Resulting position</th><th class="num">Par-job lost</th></tr></thead><tbody>
+<tr><td>Fairway / Good Lie</td><td class="num">0%</td></tr><tr><td>Light Rough</td><td class="num">10%</td></tr><tr><td>Deep Rough</td><td class="num">20%</td></tr><tr><td>Bunker</td><td class="num">20%</td></tr><tr><td>Restricted</td><td class="num">50%</td></tr><tr><td>Recovery Only</td><td class="num">80%</td></tr>
+</tbody></table>
+<div class="note">Example: a shot that completes 100% of its advancement job but finishes Restricted creates only 0.5 strokes of useful par, so it scores −0.5 SGvP. The shot that created the problem owns the disadvantage.</div></div>
+<div class="card"><h3 style="margin-top:0">The reconciliation rule</h3><p>No matter how a hole is played, all shot values must reconcile to <b>Par − Score</b>: eagle +2, birdie +1, par 0, bogey −1, double −2.</p></div>
+</div>
 <div class="detail-overlay" id="roundDetailOverlay" onclick="closeRoundDetail(event)">
 <div class="detail-panel" onclick="event.stopPropagation()">
 <div class="detail-head">
@@ -377,35 +305,9 @@ Hole yardage can be adjusted when today’s tee or pin position is noticeably di
 <div id="roundDetailContent"></div>
 </div>
 </div>
-<footer>Prototype for SG vs Par testing. Values are provisional and intended for calibration with real rounds.</footer>
+<footer>SG vs Par v6.3.8 percentage-model test. Quick Start and scoring guide updated for the frozen percentage architecture; calibration remains under real-round testing.</footer>
 </div>
 <script>
-
-// v6.2 mobile field-test helpers
-function setSaveStatus(text){
-  const el=document.getElementById("saveStatus");
-  if(el) el.textContent=text;
-}
-function markSaved(){
-  try{
-    const now=new Date();
-    setSaveStatus("Saved " + now.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}));
-  }catch(e){ setSaveStatus("Saved"); }
-}
-window.addEventListener("pagehide", ()=>{ try{ if(typeof autosave==="function") autosave(); }catch(e){} });
-document.addEventListener("visibilitychange", ()=>{
-  if(document.visibilityState==="hidden"){
-    try{ if(typeof autosave==="function") autosave(); }catch(e){}
-  }
-});
-window.addEventListener("online", ()=>setSaveStatus("Online"));
-window.addEventListener("offline", ()=>setSaveStatus("Offline • local save active"));
-if("serviceWorker" in navigator){
-  window.addEventListener("load", ()=>{
-    navigator.serviceWorker.register("./sw.js").catch(()=>{});
-  });
-}
-
 const hz = [
  [4,370],[5,521],[4,356],[4,318],[5,507],[3,147],[3,188],[4,344],[4,420],
  [4,426],[4,405],[5,472],[3,200],[4,356],[4,361],[5,501],[3,156],[4,353]
@@ -649,7 +551,8 @@ function templateFor(courseName, teeName){
   const c=courseDefs[courseName] || courseDefs["Fraserview Golf Course"];
   const selected=(teeName && c.tees[teeName]) ? teeName : c.defaultTee;
   const yards=c.tees[selected];
-  return c.pars.map((par,i)=>[par,yards[i]]);
+  const pars=(c.teePars && c.teePars[selected]) ? c.teePars[selected] : c.pars;
+  return pars.map((par,i)=>[par,yards[i]]);
 }
 function frTemplateForTee(teeName){ return templateFor("Fraserview Golf Course", teeName); }
 
@@ -663,86 +566,99 @@ const mcTeeClub = ["1W","1W","6i","3W","1W","1W","1W","8i","3W","1W","1W","3W","
 
 let round = { course:"", tees:"", date:"", courseRating:null, slopeRating:null, pcc:0, holes:[] };
 
-// v2.9 calibration: par is the benchmark; a shot owns the position and consequences it creates.
-// Lie cost is an adjustment to the value created by the shot. A forced recovery costs a full stroke.
+// v6.3 frozen percentage architecture: par is the benchmark.
+// Distance measures completion of the par-defined job; it is not itself the benchmark.
+// One resulting-position disadvantage may apply, and the shot that creates it owns it.
 const createdLieCost = {
-  // v4.1 five-state golfer-facing model
-  "Fairway / First Cut":0.0,
-  "Fairway / Fringe":0.0,
+  "Fairway / Good Lie":0.0,
+  "Fairway / First Cut":0.0, "Fairway / Fringe":0.0, "Fairway":0.0, "Fringe/Puttable":0.0,
   "Light Rough":0.1,
-  "Deep Rough / Bunker":0.2, "Deep Rough":0.2, "Bunker":0.2,
-  "Restricted":0.5,
-  "Recovery Only":1.0,
-  // Legacy aliases retained only so older saved rounds still recalculate correctly.
-  "Fairway":0.0, "Fringe/Puttable":0.0, "Rough":0.2, "Heavy Rough":0.2,
-  "Fairway Bunker":0.2, "Greenside Bunker":0.2, "Trees/Clear Shot":0.5,
-  "Restricted/Blocked":0.5
+  "Deep Rough":0.2, "Deep Rough / Bunker":0.2, "Bunker":0.2, "Rough":0.2, "Heavy Rough":0.2,
+  "Fairway Bunker":0.2, "Greenside Bunker":0.2,
+  "Restricted":0.5, "Restricted/Blocked":0.5, "Trees/Clear Shot":0.5,
+  "Recovery Only":0.8
 };
 
 function puttingPR(bucket){
-  // v2.9 putting curve. Legacy bucket names remain readable for older saved rounds.
   const map = {
     "Holed":0.0,
-    "1–2 ft":1.0,
+    "<3 ft":1.0, "1–2 ft":1.0, "0–3 ft":1.0,
     "3–4 ft":1.1,
-    "5–6 ft":1.3,
-    "7–9 ft":1.5,
-    "10–14 ft":1.7,
-    "15–20 ft":1.8,
-    "21–30 ft":1.9,
-    "31–40 ft":2.0,
-    "41–55 ft":2.1,
-    "56–75 ft":2.2,
-    "76+ ft":2.3,
-    // Legacy v2.8 compatibility
-    "0–3 ft":1.0, "4–6 ft":1.2, "15–35 ft":2.0,
-    "36–50 ft":2.1, "51–70 ft":2.3, "70+ ft":2.5
+    "5 ft":1.2,
+    "6 ft":1.3, "5–6 ft":1.3,
+    "7 ft":1.4,
+    "8–9 ft":1.5, "7–9 ft":1.5,
+    "10–12 ft":1.6,
+    "13–15 ft":1.7, "10–14 ft":1.7,
+    "16–18 ft":1.8, "15–20 ft":1.8,
+    "19–25 ft":1.9, "21–30 ft":1.9,
+    "26–35 ft":2.0, "31–40 ft":2.0, "15–35 ft":2.0,
+    "36–50 ft":2.1, "41–55 ft":2.1,
+    "51–70 ft":2.2, "56–75 ft":2.2,
+    "71+ ft":2.3, "76+ ft":2.3, "70+ ft":2.3
   };
   return map[bucket];
 }
 
-function positionPR(yards){
-  yards=Number(yards);
-  // v4.4 approved distance buckets. Holed is handled separately as PR 0.0.
-  if(yards<=4) return 2.2;
-  if(yards<=9) return 2.3;
-  if(yards<=14) return 2.4;
-  if(yards<=25) return 2.5;
-  if(yards<=40) return 2.6;
-  if(yards<=75) return 2.7;
-  if(yards<=100) return 2.8;
-  if(yards<=125) return 2.9;
-  if(yards<=155) return 3.0;
-  if(yards<=170) return 3.1;
-  if(yards<=180) return 3.2;
-  if(yards<=190) return 3.3;
-  if(yards<=200) return 3.4;
-  if(yards<=210) return 3.5;
-  if(yards<=220) return 3.6;
-  if(yards<=226) return 3.7;
-  if(yards<=232) return 3.8;
-  if(yards<=260) return 4.0;
-  if(yards<=290) return 4.2;
-  if(yards<=325) return 4.4;
-  if(yards<=400) return 4.7;
-  return 5.0;
+const NEUTRAL_PUTT_YARDS=10.7; // about 32 ft, centre of PR 2.0 / 26–35 ft
+function round1(x){ return Math.round((Number(x)+Number.EPSILON)*10)/10; }
+
+function par4DriveSG(pct){
+  if(pct>=75) return 0.3; if(pct>=70) return 0.2; if(pct>=65) return 0.1; if(pct>=60) return 0.0;
+  if(pct>=55) return -0.1; if(pct>=50) return -0.2; if(pct>=45) return -0.3; if(pct>=40) return -0.4;
+  if(pct>=35) return -0.5; if(pct>=30) return -0.6; if(pct>=25) return -0.7; if(pct>=20) return -0.8;
+  if(pct>=10) return -0.9; return -1.0;
+}
+function par5DriveSG(pct){
+  if(pct>=75) return 1.0; if(pct>=72.5) return 0.9; if(pct>=70) return 0.8; if(pct>=67.5) return 0.7;
+  if(pct>=65) return 0.6; if(pct>=62.5) return 0.5; if(pct>=60) return 0.4; if(pct>=57.5) return 0.3;
+  if(pct>=55) return 0.2; if(pct>=52.5) return 0.1; if(pct>=50) return 0.0; if(pct>=47.5) return -0.1;
+  if(pct>=45) return -0.2; if(pct>=42.5) return -0.3; if(pct>=40) return -0.4; if(pct>=35) return -0.5;
+  if(pct>=30) return -0.6; if(pct>=25) return -0.7; if(pct>=20) return -0.8; if(pct>=10) return -0.9; return -1.0;
 }
 
+// Neutral pathway milestones expressed as [yards remaining, PR]. Between milestones,
+// PR changes linearly: that is exactly the percentage of the current par-job completed.
+function pathwayPoints(hole){
+  const H=Math.max(Number(hole.yards)||0,NEUTRAL_PUTT_YARDS+1);
+  if(Number(hole.par)===3) return [[H,3.0],[NEUTRAL_PUTT_YARDS,2.0]];
+  if(Number(hole.par)===5) return [[H,5.0],[H*0.50,4.0],[H*0.25,3.0],[NEUTRAL_PUTT_YARDS,2.0]];
+  // Par 4 neutral drive band is 60–64.9%; midpoint is used only to define the continuous
+  // approach pathway. The tee shot itself is scored by the locked percentage buckets above.
+  return [[H,4.0],[H*0.375,3.0],[NEUTRAL_PUTT_YARDS,2.0]];
+}
+function pathwayPR(hole,yards){
+  const y=Math.max(0,Number(yards)||0), pts=pathwayPoints(hole);
+  if(y<=NEUTRAL_PUTT_YARDS) return 2.0; // off-green edge; putting PR takes over on the green
+  for(let i=0;i<pts.length-1;i++){
+    const [y1,p1]=pts[i], [y2,p2]=pts[i+1];
+    if(y<=y1 && y>=y2){
+      const completion=(y1-y)/(y1-y2);
+      return p1-completion*(p1-p2);
+    }
+  }
+  return Number(hole.par);
+}
 function resolvePositionZone(destType, remYds){
   if(destType==="Holed") return "Holed";
   if(destType==="Green") return "Green";
   const y=Number(remYds);
-  if(Number.isFinite(y) && y>=0 && y<=50) return "Short Game";
+  if(Number.isFinite(y) && y>=0 && y<=60) return "Short Game";
   return "Approach";
 }
-
-function round1(x){ return Math.round(x*10)/10; }
-
-function getStatePR(hole, destType, remYds, lie, puttBucket){
+function getStatePR(hole,destType,remYds,lie,puttBucket){
   const zone=resolvePositionZone(destType,remYds);
   if(zone==="Green") return puttingPR(puttBucket);
   if(zone==="Holed") return 0.0;
-  return round1(positionPR(remYds) + (createdLieCost[lie]||0));
+  return round1(pathwayPR(hole,remYds)+(createdLieCost[lie]||0));
+}
+function teePercentageAfterPR(hole,remYds,lie){
+  const H=Number(hole.yards)||0, rem=Math.max(0,Number(remYds)||0);
+  const pct=H>0 ? Math.max(0,(H-rem)/H*100) : 0;
+  const baseSG=Number(hole.par)===5 ? par5DriveSG(pct) : par4DriveSG(pct);
+  const lieCost=createdLieCost[lie]||0;
+  const sg=Math.max(-1,round1(baseSG-lieCost));
+  return {pct,sg,after:round1(Number(hole.par)-1-sg)};
 }
 
 function inferCategory(hole, shotIndex, shotType){
@@ -849,11 +765,6 @@ function shotForm(hi){
   const f=document.createElement("div"); f.className="shot-form";
   f.innerHTML=`
     <div class="row">
-      <div><label>Category</label>
-        <select id="cat${hi}">
-          <option selected>Auto</option><option>Driving</option><option>Approach</option><option>Short Game</option><option>Putting</option>
-        </select>
-      </div>
       <div><label>Ball finished...</label>
         <select id="dest${hi}" onchange="toggleDest(${hi})">
           <option value="Full Shot" selected>Yards remaining</option>
@@ -867,8 +778,7 @@ function shotForm(hi){
       <div id="puttBox${hi}" class="hidden">
         <label>Distance to hole</label>
         <select id="putt${hi}">
-          <option>1–2 ft</option><option>3–4 ft</option><option>5–6 ft</option><option>7–9 ft</option><option>10–14 ft</option>
-          <option>15–20 ft</option><option>21–30 ft</option><option selected>31–40 ft</option><option>41–55 ft</option><option>56–75 ft</option><option>76+ ft</option>
+          <option>&lt;3 ft</option><option>3–4 ft</option><option>5 ft</option><option>6 ft</option><option>7 ft</option><option>8–9 ft</option><option>10–12 ft</option><option>13–15 ft</option><option>16–18 ft</option><option>19–25 ft</option><option selected>26–35 ft</option><option>36–50 ft</option><option>51–70 ft</option><option>71+ ft</option>
         </select>
       </div>
       <div id="puttCountBox${hi}" class="hidden">
@@ -878,9 +788,9 @@ function shotForm(hi){
         </select>
       </div>
       <div id="lieBox${hi}">
-        <label>Lie</label>
+        <label>Resulting Position</label>
         <select id="lie${hi}">
-          <option>Fairway / First Cut</option><option>Light Rough</option><option>Deep Rough</option><option>Bunker</option>
+          <option>Fairway / Good Lie</option><option>Light Rough</option><option>Deep Rough</option><option>Bunker</option>
           <option>Restricted</option><option>Recovery Only</option>
         </select>
       </div>
@@ -1006,37 +916,38 @@ function recalcHole(hi){
   const h=round.holes[hi];
   let before=h.par;
   h.shots.forEach((s,si)=>{
+    if(!s.autoPutting) s.category=inferCategory(h,si,"Auto");
     if(s.autoPutting){
       s.beforePR=before; s.afterPR=0; s.sg=round1(before-(s.strokesUsed||1)); s.label=buildLabel(s); before=0; return;
     }
-    let after;
+    let after, sg;
     if(s.penaltyMode==="strokeDistance"){
-      after=before;
-      s.penalty=1;
+      after=before; s.penalty=1; sg=-2.0;
     } else if(s.dest==="Holed"){
-      after=0;
+      after=0; sg=round1(before-1-(s.penalty||0));
+    } else if(si===0 && s.dest!=="Green" && Number(h.par)>=4){
+      const t=teePercentageAfterPR(h,s.yards,s.lie);
+      after=t.after; sg=round1(t.sg-(s.penalty||0)); s.jobPct=t.pct;
     } else {
-      // Bucket-only model: every tee shot and every later shot is scored from
-      // the PR of the actual position created (distance remaining + lie/access).
       after=getStatePR(h,s.dest,s.yards,s.lie,s.putt);
+      sg=round1(before-after-1-(s.penalty||0));
+      if(!(s.penalty||0)) sg=Math.max(-1,sg);
+      // Keep PR consistent with the no-penalty floor when it applies.
+      if(!(s.penalty||0) && sg===-1) after=round1(before);
     }
-    s.beforePR=before;
-    s.afterPR=after;
-    s.resolvedZone=resolvePositionZone(s.dest,s.yards);
-    s.strokesUsed=s.strokesUsed||1;
-    s.sg=round1(before-after-1-(s.penalty||0));
-    // Ordinary non-penalty misses with a normal direct recovery should not exceed roughly -1.0.
-    s.label=buildLabel(s);
-    if(si===0 && s.category==="Driving" && s.dest==="Full Shot") {
-      s.label += ` • Bucket model • PR ${after.toFixed(1)}`;
+    s.beforePR=before; s.afterPR=after; s.resolvedZone=resolvePositionZone(s.dest,s.yards);
+    s.strokesUsed=s.strokesUsed||1; s.sg=sg; s.label=buildLabel(s);
+    if(si===0 && s.category==="Driving" && s.dest==="Full Shot" && Number(h.par)>=4){
+      s.label += ` • ${s.jobPct.toFixed(1)}% advanced`;
     }
     before=after;
   });
-}function editShot(hi,si){
+}
+function editShot(hi,si){
   editingShot={hi,si};
   render();
   setTimeout(()=>{
-    const el=document.getElementById(`cat${hi}`);
+    const el=document.getElementById(`dest${hi}`);
     if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
   },50);
 }
@@ -1044,16 +955,15 @@ function recalcHole(hi){
 function populateEditForm(hi,si){
   const s=round.holes[hi].shots[si];
   if(!s) return;
-  document.getElementById(`cat${hi}`).value=s.category;
   document.getElementById(`dest${hi}`).value=s.dest;
   toggleDest(hi);
   if(s.dest==="Green"){
-    document.getElementById(`putt${hi}`).value=s.putt || "31–40 ft";
+    document.getElementById(`putt${hi}`).value=s.putt || "26–35 ft";
     const pc=document.getElementById(`puttCount${hi}`);
     if(pc && round.holes[hi].recordedPutts!=null) pc.value=String(round.holes[hi].recordedPutts);
   } else if(s.dest!=="Holed"){
     document.getElementById(`yards${hi}`).value=s.yards ?? "";
-    document.getElementById(`lie${hi}`).value=s.lie || "Fairway";
+    document.getElementById(`lie${hi}`).value=s.lie || "Fairway / Good Lie";
   }
   document.getElementById(`pen${hi}`).value=s.penaltyMode || (s.penalty ? "drop" : "none");
   togglePenalty(hi);
@@ -1068,8 +978,7 @@ function addShot(hi){
   const h=round.holes[hi];
   removeAutoPutting(h);
   const si=h.shots.length;
-  const selectedCat=document.getElementById(`cat${hi}`).value;
-  const cat=inferCategory(h,si,selectedCat);
+  const cat=inferCategory(h,si,"Auto");
   const penaltyMode=document.getElementById(`pen${hi}`).value;
 
   let newShot;
@@ -1140,7 +1049,7 @@ function onCourseSelectionChange(){
   else { round.courseRating=null; round.slopeRating=null; }
   const template=templateFor(courseName, round.tees);
   round.holes=template.map(x=>({par:x[0],yards:x[1],score:null,shots:[],recordedPutts:null,teeClub:"",scoreSource:null,puttsSource:null,penaltyFlag:false}));
-  document.getElementById("totalPar").value=c.pars.reduce((a,b)=>a+b,0);
+  document.getElementById("totalPar").value=((c.teePars&&c.teePars[round.tees])?c.teePars[round.tees]:c.pars).reduce((a,b)=>a+b,0);
   populateTeeDropdown(courseName, round.tees);
   autosave();
   render();
@@ -1156,15 +1065,16 @@ function onTeeSelectionChange(){
   const hr=handicapRatingFor(courseName,selected);
   if(hr){ round.courseRating=hr.rating; round.slopeRating=hr.slope; }
   const yards=c.tees[selected];
+  const pars=(c.teePars&&c.teePars[selected])?c.teePars[selected]:c.pars;
   round.holes.forEach((h,i)=>{
-    h.par=c.pars[i];
+    h.par=pars[i];
     h.yards=yards[i];
     if(h.shots && h.shots.length){
       recalcHole(i);
       updateCalculatedScore(h);
     }
   });
-  document.getElementById("totalPar").value=c.pars.reduce((a,b)=>a+b,0);
+  document.getElementById("totalPar").value=((c.teePars&&c.teePars[round.tees])?c.teePars[round.tees]:c.pars).reduce((a,b)=>a+b,0);
   autosave();
   render();
 }
@@ -1225,6 +1135,37 @@ function updateSummary(){
 }
 
 
+function startNewRound(){
+  const hasRoundData = Array.isArray(round.holes) && round.holes.some(h =>
+    (h.shots && h.shots.length) || h.score !== null || h.recordedPutts !== null
+  );
+  if(hasRoundData && !confirm("Start a new round? This will clear the current round entry. Saved Results history will not be affected.")) return;
+
+  const courseEl=document.getElementById("course");
+  const teeEl=document.getElementById("tees");
+  const courseName=(courseEl && courseEl.value) || round.course || "Fraserview Golf Course";
+  const c=courseDefs[courseName] || courseDefs["Fraserview Golf Course"];
+  const requestedTee=(teeEl && teeEl.value) || round.tees || c.defaultTee;
+  const teeName=c.tees[requestedTee] ? requestedTee : c.defaultTee;
+  const hr=handicapRatingFor(courseName,teeName);
+
+  round.course=courseName;
+  round.tees=teeName;
+  round.date=new Date().toISOString().slice(0,10);
+  round.courseRating=hr ? hr.rating : null;
+  round.slopeRating=hr ? hr.slope : null;
+  round.pcc=0;
+  round.holes=templateFor(courseName,teeName).map(x=>({
+    par:x[0], yards:x[1], score:null, shots:[], recordedPutts:null, teeClub:"",
+    scoreSource:null, puttsSource:null, penaltyFlag:false
+  }));
+
+  populateTeeDropdown(courseName,teeName);
+  autosave();
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
 function newSelectedCourseRound(){
   const courseName=document.getElementById("course").value || "Fraserview Golf Course";
   const c=courseDefs[courseName] || courseDefs["Fraserview Golf Course"];
@@ -1235,7 +1176,7 @@ function newSelectedCourseRound(){
     par:x[0], yards:x[1], score:null, shots:[], recordedPutts:null, teeClub:"",
     scoreSource:null, puttsSource:null, penaltyFlag:false
   }));
-  document.getElementById("totalPar").value=c.pars.reduce((a,b)=>a+b,0);
+  document.getElementById("totalPar").value=((c.teePars&&c.teePars[round.tees])?c.teePars[round.tees]:c.pars).reduce((a,b)=>a+b,0);
   document.getElementById("date").value="";
   autosave(); render();
 }
@@ -1290,7 +1231,7 @@ function newBlankRound(){
   render();
 }
 
-const LEGACY_STORAGE_KEY = "sg_vs_par_multi_course_v2_6";
+const LEGACY_STORAGE_KEYS = ["sg_vs_par_multi_course_v2_8","sg_vs_par_multi_course_v2_7","sg_vs_par_multi_course_v2_6","sg_vs_par_multi_course_v2_5","sg_vs_par_multi_course_v2_4"];
 const LEGACY_HISTORY_KEY = "sg_vs_par_round_history_v1";
 const LEGACY_PROFILE_KEY = "sg_vs_par_player_profile_v1";
 const ACTIVE_PLAYER_KEY = "sg_vs_par_active_player_v1";
@@ -1305,8 +1246,39 @@ function rememberPlayer(name){ const n=String(name||"").trim(); if(!n)return; le
 function migrateLegacyToPlayer(){
   if(!activePlayerName) return;
   const sk=playerStorageKey(), hk=playerHistoryKey(), pk=playerProfileKey();
-  if(!localStorage.getItem(sk) && localStorage.getItem(LEGACY_STORAGE_KEY)) localStorage.setItem(sk,localStorage.getItem(LEGACY_STORAGE_KEY));
-  if(!localStorage.getItem(hk) && localStorage.getItem(LEGACY_HISTORY_KEY)) localStorage.setItem(hk,localStorage.getItem(LEGACY_HISTORY_KEY));
+
+  // Recover the newest pre-profile/current-round save without discarding a newer player round.
+  let legacyRound=null;
+  for(const key of LEGACY_STORAGE_KEYS){
+    const raw=localStorage.getItem(key);
+    if(!raw) continue;
+    try{ legacyRound=JSON.parse(raw); break; }catch(e){}
+  }
+  if(legacyRound){
+    let current=null;
+    try{ current=JSON.parse(localStorage.getItem(sk)||"null"); }catch(e){}
+    const completed=r=>r&&Array.isArray(r.holes)?r.holes.filter(h=>Number(h.score)>0).length:0;
+    const dateVal=r=>{ const t=Date.parse((r&&r.date)||""); return Number.isFinite(t)?t:0; };
+    const legacyNewer=!current || dateVal(legacyRound)>dateVal(current) || (dateVal(legacyRound)===dateVal(current) && completed(legacyRound)>=completed(current));
+    if(legacyNewer) localStorage.setItem(sk,JSON.stringify(legacyRound));
+  }
+
+  // Merge shared pre-profile history into the active player's history, de-duplicating by id/historyId.
+  const legacyHistRaw=localStorage.getItem(LEGACY_HISTORY_KEY);
+  if(legacyHistRaw){
+    try{
+      const legacy=JSON.parse(legacyHistRaw)||[];
+      const existing=JSON.parse(localStorage.getItem(hk)||"[]")||[];
+      const ids=new Set(existing.map(r=>r&&String(r.id||r.historyId||"")));
+      for(const r of legacy){
+        const id=String((r&&(r.id||r.historyId))||"");
+        if(id && ids.has(id)) continue;
+        existing.push(r);
+        if(id) ids.add(id);
+      }
+      localStorage.setItem(hk,JSON.stringify(existing));
+    }catch(e){}
+  }
   if(!localStorage.getItem(pk) && localStorage.getItem(LEGACY_PROFILE_KEY)) localStorage.setItem(pk,localStorage.getItem(LEGACY_PROFILE_KEY));
 }
 function setPlayerName(v){
@@ -1539,6 +1511,25 @@ function repairRecordedPuttingMismatch(r){
       .reduce((n,s)=>n+(Number(s.strokesUsed)||1),0);
     const autos=h.shots.filter(s=>s.autoPutting);
     const autoCount=autos.reduce((n,s)=>n+(Number(s.strokesUsed)||1),0);
+
+    // If the recorded putt total has already been fully consumed by manually
+    // entered putting strokes, the final putting stroke must finish the hole.
+    // Older builds could leave that last stroke as dest=Green, which made a
+    // one-putt birdie export as an unholed -1.0 putting stroke.
+    if(autoCount===0 && manual===total && total>0){
+      for(let j=h.shots.length-1;j>=0;j--){
+        const s=h.shots[j];
+        if(!s.autoPutting && s.category==="Putting"){
+          if(s.dest!=="Holed"){ s.dest="Holed"; changed=true; }
+          break;
+        }
+      }
+      if(changed){
+        recalcHole(hi);
+        if(h.scoreSource==="calculated") h.score=strokesUsed(h);
+      }
+      return;
+    }
     if(manual+autoCount===total) return;
     // Repair only the known grouped-putting mismatch: recorded total putts is
     // authoritative, so grouped auto-putting must equal the remaining putts.
@@ -1547,7 +1538,7 @@ function repairRecordedPuttingMismatch(r){
     if(remaining>0){
       const last=h.shots[h.shots.length-1];
       const startPR=last ? Number(last.afterPR) : null;
-      const bucket=last && last.putt ? last.putt : "31–40 ft";
+      const bucket=last && last.putt ? last.putt : "26–35 ft";
       if(Number.isFinite(startPR)){
         h.shots.push({
           category:"Putting",dest:"Holed",lie:"",putt:bucket,yards:0,
@@ -2098,8 +2089,8 @@ function closeRoundDetail(ev){
 }
 
 
-const PUTT_BUCKET_MID={"1–2 ft":1.5,"3–4 ft":3.5,"5–6 ft":5.5,"7–9 ft":8,"10–14 ft":12,"15–20 ft":17.5,"21–30 ft":25.5,"31–40 ft":35.5,"41–55 ft":48,"56–75 ft":65.5,"76+ ft":82};
-const PUTT_BUCKETS=["1–2 ft","3–4 ft","5–6 ft","7–9 ft","10–14 ft","15–20 ft","21–30 ft","31–40 ft","41–55 ft","56–75 ft","76+ ft"];
+const PUTT_BUCKET_MID={"<3 ft":1.5,"3–4 ft":3.5,"5 ft":5,"6 ft":6,"7 ft":7,"8–9 ft":8.5,"10–12 ft":11,"13–15 ft":14,"16–18 ft":17,"19–25 ft":22,"26–35 ft":30.5,"36–50 ft":43,"51–70 ft":60.5,"71+ ft":80};
+const PUTT_BUCKETS=["<3 ft","3–4 ft","5 ft","6 ft","7 ft","8–9 ft","10–12 ft","13–15 ft","16–18 ft","19–25 ft","26–35 ft","36–50 ft","51–70 ft","71+ ft"];
 function bucketForFeet(x){
   if(x<=2)return"1–2 ft"; if(x<=4)return"3–4 ft"; if(x<=6)return"5–6 ft"; if(x<=9)return"7–9 ft";
   if(x<=14)return"10–14 ft"; if(x<=20)return"15–20 ft"; if(x<=30)return"21–30 ft"; if(x<=40)return"31–40 ft";
@@ -2321,7 +2312,7 @@ function saveProgress(showMessage=true){
   try{
     localStorage.setItem(playerStorageKey(), JSON.stringify(round));
     if(showMessage){
-      document.getElementById("copyStatus").textContent="Progress saved in this browser.";
+      document.getElementById("copyStatus").textContent="Progress saved in this browser."; updateSaveStatus("Saved");
     }
   }catch(e){
     if(showMessage){
@@ -2348,13 +2339,18 @@ function restoreProgress(){
   }
 }
 
+function updateSaveStatus(prefix="Saved"){
+  const el=document.getElementById("saveStatus");
+  if(!el) return;
+  const t=new Date();
+  el.textContent=`${prefix} ${t.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}`;
+}
 function autosave(){
   try{
     syncRoundHeader();
     localStorage.setItem(playerStorageKey(), JSON.stringify(round));
+    updateSaveStatus("Saved");
   }catch(e){}
-
-  try{ markSaved(); }catch(e){}
 }
 
 function syncRoundHeader(){
@@ -2429,6 +2425,16 @@ try{
   newFraserviewRound();
 }
 requirePlayerProfile();
+</script>
+
+<script>
+(function(){
+  function safeSave(){ try{ if(typeof autosave==='function' && String(activePlayerName||'').trim()) autosave(); }catch(e){} }
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') safeSave(); });
+  window.addEventListener('pagehide',safeSave);
+  window.addEventListener('beforeunload',safeSave);
+  if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{})); }
+})();
 </script>
 </body>
 </html>
