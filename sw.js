@@ -1,5 +1,5 @@
-const CACHE_NAME = "sg-vs-par-v6-3-14";
-const ASSETS = ["./", "./index.html", "./index(1).html", "./metric_patch.js", "./quick_guide_patch.js", "./history_cleanup_patch.js", "./post_round_summary_patch.js", "./fairway_stats_patch.js", "./round_state_guard_patch.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE_NAME = "sg-vs-par-v6-3-15";
+const ASSETS = ["./", "./index.html", "./index(1).html", "./metric_patch.js", "./quick_guide_patch.js", "./history_cleanup_patch.js", "./post_round_summary_patch.js", "./fairway_stats_patch.js", "./round_state_guard_patch.js", "./single_hole_mobile_patch.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
