@@ -46,9 +46,74 @@
     "Red":{rating:67.1,slope:116}
   };
 
+
+  // Fairmont Chateau Whistler Golf Club — Fairmont scorecard.
+  courseDefs["Fairmont Chateau Whistler Golf Club"]={
+    pars:[5,4,4,4,3,4,5,3,5,3,4,4,4,4,4,3,4,5],
+    tees:{
+      "Gold":[505,326,399,411,190,457,538,212,472,131,355,395,349,352,389,167,445,543],
+      "Blue":[482,298,387,402,163,436,507,184,449,118,332,376,324,330,366,142,424,523],
+      "Fairmont":[482,298,342,362,144,411,507,158,449,118,332,343,324,330,351,142,366,523],
+      "White":[449,266,342,362,144,411,484,158,426,92,301,343,304,285,351,110,366,498],
+      "Red":[415,242,313,311,108,393,454,123,504,75,287,307,259,249,324,88,337,467]
+    },defaultTee:"Blue",labels:{"Gold":"Gold","Blue":"Blue","Fairmont":"Fairmont","White":"White","Red":"Red"}
+  };
+  TEE_HANDICAP_RATINGS["Fairmont Chateau Whistler Golf Club"]={
+    "Gold":{rating:71.5,slope:145},"Blue":{rating:69.6,slope:131},
+    "Fairmont":{rating:68.4,slope:127},"White":{rating:67.5,slope:119},"Red":{rating:69.8,slope:126}
+  };
+
+  // Blue Ocean Golf Club — club confirms current 18-hole par 72 and 5,351–6,553 yard range;
+  // hole-by-hole card reconciled to those published totals.
+  courseDefs["Blue Ocean Golf Club"]={
+    pars:[4,3,4,4,5,3,4,5,4,4,4,5,3,5,4,4,3,4],
+    tees:{
+      "Blue":[364,177,376,439,453,196,388,494,362,345,411,488,179,474,361,416,227,403],
+      "White":[338,139,345,416,436,178,351,457,339,318,371,465,145,450,345,392,199,374],
+      "Red":[302,118,324,376,400,149,317,421,303,280,321,424,124,418,314,362,160,343],
+      "Gold":[302,99,324,376,400,132,317,421,303,280,321,384,95,418,314,362,160,343]
+    },defaultTee:"Blue",labels:{"Blue":"Blue","White":"White","Red":"Red","Gold":"Gold"}
+  };
+  TEE_HANDICAP_RATINGS["Blue Ocean Golf Club"]={
+    "Blue":{rating:71.6,slope:126},"White":{rating:69.0,slope:122},
+    "Red":{rating:65.8,slope:115},"Gold":{rating:70.3,slope:114}
+  };
+
+  // Sunshine Coast Golf & Country Club — official club confirms four tees, par 72, 4,669–6,357 yards.
+  courseDefs["Sunshine Coast Golf & Country Club"]={
+    pars:[5,4,3,5,4,4,4,5,3,4,5,4,4,4,3,4,3,4],
+    tees:{
+      "Blue":[510,292,212,502,340,322,417,489,196,415,533,364,378,407,183,309,126,362],
+      "White":[490,272,188,474,312,301,388,462,170,315,500,357,370,381,171,309,126,352],
+      "Red":[440,262,167,416,292,258,314,448,155,293,457,344,370,354,157,299,100,352],
+      "Gold":[440,152,106,363,267,222,314,357,114,90,423,332,359,354,157,299,100,294]
+    },defaultTee:"White",labels:{"Blue":"Blue","White":"White","Red":"Red","Gold":"Gold"}
+  };
+  TEE_HANDICAP_RATINGS["Sunshine Coast Golf & Country Club"]={
+    "Blue":{rating:70.3,slope:131},"White":{rating:68.6,slope:124},
+    "Red":{rating:66.3,slope:116},"Gold":{rating:64.5,slope:111}
+  };
+
+  // Myrtle Point Golf Club — current official hole-by-hole card.
+  courseDefs["Myrtle Point Golf Club"]={
+    pars:[5,4,4,3,4,3,4,4,5,4,4,5,3,4,5,4,3,4],
+    tees:{
+      "Black":[526,433,375,193,420,170,402,403,523,439,362,493,208,405,538,390,198,425],
+      "Blue":[499,419,341,172,394,143,376,382,482,423,341,467,187,382,509,345,173,408],
+      "White":[475,391,323,149,371,121,351,356,447,391,297,440,160,353,486,311,136,392],
+      "Red":[396,374,284,124,352,100,326,334,427,364,271,410,130,322,482,290,113,327]
+    },defaultTee:"Blue",labels:{"Black":"Black","Blue":"Blue","White":"White","Red":"Red"}
+  };
+  // Ratings intentionally omitted here until the club's current rating card is reconciled
+  // with the current official Black tee total (6,903 yards).
+
   const REGION_MAP={
     "Big Sky Golf Club":"Sea-to-Sky / Sunshine Coast",
     "Nicklaus North Golf Course":"Sea-to-Sky / Sunshine Coast",
+    "Fairmont Chateau Whistler Golf Club":"Sea-to-Sky / Sunshine Coast",
+    "Blue Ocean Golf Club":"Sea-to-Sky / Sunshine Coast",
+    "Sunshine Coast Golf & Country Club":"Sea-to-Sky / Sunshine Coast",
+    "Myrtle Point Golf Club":"Sea-to-Sky / Sunshine Coast",
     "Swaneset Bay — Resort Course":"Lower Mainland / Fraser Valley",
     "Swaneset Bay — Links Course":"Lower Mainland / Fraser Valley",
     "Burnaby Mountain Golf Course":"Lower Mainland / Fraser Valley",
