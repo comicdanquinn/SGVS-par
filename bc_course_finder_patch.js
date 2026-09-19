@@ -190,7 +190,26 @@
     "Green":{rating:67.1,slope:115},"Red":{rating:66.6,slope:110},"Yellow":{rating:61.7,slope:103}
   };
 
+
+  // Olympic View Golf Club — current GolfBC scorecard / official course information.
+  courseDefs["Olympic View Golf Club"]={
+    pars:[4,3,4,3,4,3,4,5,4,4,4,4,5,3,4,5,4,5],
+    tees:{
+      "Gold":[388,188,445,157,433,238,333,538,383,327,390,335,595,193,382,522,455,498],
+      "Silver":[367,167,424,149,404,202,317,513,367,304,369,322,520,181,363,497,366,480],
+      "Bronze":[331,146,387,136,365,238,284,468,341,273,331,240,413,163,284,459,351,452],
+      "Black":[300,146,363,136,338,212,284,442,320,273,310,224,413,146,284,432,327,423]
+    },defaultTee:"Silver",labels:{"Gold":"Gold","Silver":"Silver","Bronze":"Bronze","Black":"Black"}
+  };
+  TEE_HANDICAP_RATINGS["Olympic View Golf Club"]={
+    "Gold":{men:{rating:72.7,slope:133},women:{rating:79.2,slope:141}},
+    "Silver":{men:{rating:70.9,slope:130},women:{rating:76.8,slope:134}},
+    "Bronze":{women:{rating:74.4,slope:130}},
+    "Black":{men:{rating:67.5,slope:117},women:{rating:72.0,slope:127}}
+  };
+
   const REGION_MAP={
+    "Olympic View Golf Club":"Vancouver Island",
     "Nanaimo Golf Club":"Vancouver Island",
     "Storey Creek Golf Club":"Vancouver Island",
     "Fairwinds Golf Club":"Vancouver Island",
