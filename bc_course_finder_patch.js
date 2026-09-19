@@ -266,4 +266,60 @@
   css.textContent='.sg-course-finder{margin:10px 0 14px;padding:12px;border:1px solid #d8e1dc;border-radius:12px;background:#f8fbf9}.sg-find-title{font-weight:700;margin-bottom:8px}.sg-find-or{text-align:center;font-size:.85rem;opacity:.7;margin:8px 0}.sg-find-grid{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}.sg-course-finder input,.sg-course-finder select{width:100%;max-width:100%;box-sizing:border-box}.sg-search-results{display:grid;gap:6px;margin-top:8px}.sg-course-result{text-align:left;padding:9px 10px}.sg-course-result small{display:block;font-weight:400;opacity:.7;margin-top:2px}@media(max-width:700px){.sg-find-grid{grid-template-columns:1fr}.sg-course-finder{padding:10px}}';
   document.head.appendChild(css);
   addCourseOptions(); installFinder();
+
+
+  // v6.3.21 — support separate men's/women's Course Rating & Slope per tee.
+  // Backward compatible: legacy {rating,slope} entries continue to work.
+  window.SG_RATING_SEX_KEY='sgRatingSex';
+  window.SG_ratingSex=localStorage.getItem(window.SG_RATING_SEX_KEY)||'men';
+  window.SG_setRatingSex=function(sex){
+    window.SG_ratingSex=(sex==='women')?'women':'men';
+    localStorage.setItem(window.SG_RATING_SEX_KEY,window.SG_ratingSex);
+    const course=document.getElementById('course')?.value, tee=document.getElementById('tees')?.value;
+    const hr=handicapRatingFor(course,tee);
+    if(hr && window.round){ round.courseRating=hr.rating; round.slopeRating=hr.slope; autosave(); render(); }
+    window.SG_syncRatingSexUI();
+  };
+  window.SG_syncRatingSexUI=function(){
+    const s=document.getElementById('sgRatingSex'); if(s) s.value=window.SG_ratingSex;
+  };
+
+  const _legacyHandicapRatingFor=handicapRatingFor;
+  handicapRatingFor=function(course,tees){
+    const c=TEE_HANDICAP_RATINGS[course], entry=c&&c[tees];
+    if(!entry) return null;
+    if(Number.isFinite(Number(entry.rating)) && Number.isFinite(Number(entry.slope))) return entry;
+    const preferred=entry[window.SG_ratingSex];
+    if(preferred && Number.isFinite(Number(preferred.rating)) && Number.isFinite(Number(preferred.slope))) return preferred;
+    const fallback=entry.men||entry.women||null;
+    return fallback;
+  };
+
+  // Preserve verified sex-specific ratings where current official data is already available.
+  // Existing single ratings remain usable until each course is re-verified.
+  if(TEE_HANDICAP_RATINGS["Nanaimo Golf Club"]){
+    const n=TEE_HANDICAP_RATINGS["Nanaimo Golf Club"];
+    // Current men's values already stored; wrap them without inventing women's values.
+    Object.keys(n).forEach(t=>{ if(n[t]&&n[t].rating!==undefined) n[t]={men:{rating:n[t].rating,slope:n[t].slope}}; });
+  }
+  if(TEE_HANDICAP_RATINGS["Storey Creek Golf Club"]){
+    const n=TEE_HANDICAP_RATINGS["Storey Creek Golf Club"];
+    Object.keys(n).forEach(t=>{ if(n[t]&&n[t].rating!==undefined) n[t]={men:{rating:n[t].rating,slope:n[t].slope}}; });
+  }
+  if(TEE_HANDICAP_RATINGS["Fairwinds Golf Club"]){
+    const n=TEE_HANDICAP_RATINGS["Fairwinds Golf Club"];
+    Object.keys(n).forEach(t=>{ if(n[t]&&n[t].rating!==undefined) n[t]={men:{rating:n[t].rating,slope:n[t].slope}}; });
+  }
+
+  function installRatingSexSelector(){
+    if(document.getElementById('sgRatingSex')) return;
+    const cr=document.getElementById('courseRating'); if(!cr) return;
+    const host=cr.parentElement;
+    const box=document.createElement('div'); box.id='sgRatingSexWrap';
+    box.innerHTML='<label>Rating Set</label><select id="sgRatingSex" onchange="SG_setRatingSex(this.value)"><option value="men">Men</option><option value="women">Women</option></select>';
+    host.parentNode.insertBefore(box,host);
+    window.SG_syncRatingSexUI();
+  }
+  installRatingSexSelector();
+
 })();
