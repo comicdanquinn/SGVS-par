@@ -5,8 +5,8 @@
 fetch('./index(1).html?core=v6.3.8',{cache:'no-store'})
   .then(r=>{if(!r.ok) throw new Error('Core app failed to load'); return r.text();})
   .then(html=>{
-    html=html.replace('Live Test Build: v6.3.8','Live Test Build: v6.3.20');
-    html=html.replace('</body>','<script src="./metric_patch.js?v=6.3.9"><\/script><script src="./quick_guide_patch.js?v=6.3.10"><\/script><script src="./history_cleanup_patch.js?v=6.3.11"><\/script><script src="./post_round_summary_patch.js?v=6.3.12"><\/script><script src="./fairway_stats_patch.js?v=6.3.13"><\/script><script src="./round_state_guard_patch.js?v=6.3.14"><\/script><script src="./single_hole_mobile_patch.js?v=6.3.15"><\/script><script src="./swaneset_courses_patch.js?v=6.3.16"><\/script><script src="./bc_course_finder_patch.js?v=6.3.20"><\/script></body>');
+    html=html.replace('Live Test Build: v6.3.8','Live Test Build: v6.3.21');
+    html=html.replace('</body>','<script src="./metric_patch.js?v=6.3.9"><\/script><script src="./quick_guide_patch.js?v=6.3.10"><\/script><script src="./history_cleanup_patch.js?v=6.3.11"><\/script><script src="./post_round_summary_patch.js?v=6.3.12"><\/script><script src="./fairway_stats_patch.js?v=6.3.13"><\/script><script src="./round_state_guard_patch.js?v=6.3.14"><\/script><script src="./single_hole_mobile_patch.js?v=6.3.15"><\/script><script src="./swaneset_courses_patch.js?v=6.3.16"><\/script><script src="./bc_course_finder_patch.js?v=6.3.21"><\/script></body>');
     document.open(); document.write(html); document.close();
   })
   .catch(err=>{document.body.innerHTML='<h2>SG vs Par could not load</h2><p>Please refresh the page.</p>'; console.error(err);});
