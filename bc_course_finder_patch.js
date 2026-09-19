@@ -140,7 +140,60 @@
     "Gold":{rating:70.0,slope:125},"White":{rating:67.3,slope:116},"Red":{rating:63.8,slope:111}
   };
 
+
+  // Vancouver Island batch — official club scorecards.
+  courseDefs["Nanaimo Golf Club"]={
+    pars:[5,4,4,3,4,4,4,3,5,4,4,4,3,5,4,5,3,4],
+    tees:{
+      "Black":[506,358,436,192,331,431,412,155,512,366,415,358,201,503,411,498,169,413],
+      "Blue":[487,337,421,176,312,411,400,141,485,353,391,343,183,479,383,483,148,388],
+      "Blue/White":[487,337,389,176,312,393,379,141,485,353,367,343,183,479,356,483,148,360],
+      "White":[474,319,389,162,295,393,379,129,467,338,367,312,170,456,356,466,132,360],
+      "Gold":[463,288,361,147,283,377,362,112,456,320,343,287,154,436,342,453,121,343],
+      "Gold/Green":[463,288,316,147,283,318,289,112,456,320,280,287,154,436,285,453,121,264],
+      "Green":[422,283,316,117,280,318,289,112,401,286,280,284,154,357,285,391,117,264],
+      "Orange":[296,188,228,79,199,180,209,74,270,200,205,185,103,259,215,261,84,197]
+    },defaultTee:"Blue",labels:{"Black":"Black","Blue":"Blue","Blue/White":"Blue/White","White":"White","Gold":"Gold","Gold/Green":"Gold/Green","Green":"Green","Orange":"Orange"}
+  };
+  TEE_HANDICAP_RATINGS["Nanaimo Golf Club"]={
+    "Black":{rating:71.6,slope:129},"Blue":{rating:70.5,slope:125},
+    "Blue/White":{rating:69.7,slope:124},"White":{rating:68.6,slope:121},
+    "Gold":{rating:66.8,slope:120},"Green":{rating:63.2,slope:112}
+  };
+
+  courseDefs["Storey Creek Golf Club"]={
+    pars:[4,4,3,5,3,5,3,5,4,4,4,5,3,4,4,4,3,5],
+    tees:{
+      "Tyee":[421,405,211,542,188,533,162,518,388,378,276,568,193,365,423,411,186,528],
+      "Chinook":[393,385,191,517,169,500,146,491,353,351,258,543,155,348,396,384,166,503],
+      "Coho":[369,356,173,495,155,472,129,470,334,336,241,503,142,321,383,367,145,490],
+      "Sockeye":[333,331,159,481,132,446,116,447,279,317,202,488,111,285,357,349,124,454]
+    },defaultTee:"Chinook",labels:{"Tyee":"Tyee","Chinook":"Chinook","Coho":"Coho","Sockeye":"Sockeye"}
+  };
+  TEE_HANDICAP_RATINGS["Storey Creek Golf Club"]={
+    "Tyee":{rating:72.7,slope:133},"Chinook":{rating:70.5,slope:132},
+    "Coho":{rating:69.0,slope:125},"Sockeye":{rating:66.7,slope:118}
+  };
+
+  courseDefs["Fairwinds Golf Club"]={
+    pars:[4,3,5,4,4,3,4,4,4,3,4,4,5,3,4,4,4,5],
+    tees:{
+      "Blue":[310,206,455,418,337,151,407,336,296,155,359,397,546,235,303,330,392,518],
+      "White":[287,176,441,391,315,118,371,323,285,135,325,366,511,198,293,312,357,495],
+      "Green":[287,143,414,362,291,118,334,323,285,135,299,355,459,171,257,312,328,472],
+      "Red":[240,143,414,362,291,111,334,299,237,103,299,355,459,171,257,298,328,472],
+      "Yellow":[240,143,274,286,221,111,284,221,162,103,206,287,352,115,257,198,184,399]
+    },defaultTee:"White",labels:{"Blue":"Blue","White":"White","Green":"Green","Red":"Red","Yellow":"Yellow"}
+  };
+  TEE_HANDICAP_RATINGS["Fairwinds Golf Club"]={
+    "Blue":{rating:70.3,slope:129},"White":{rating:68.2,slope:126},
+    "Green":{rating:67.1,slope:115},"Red":{rating:66.6,slope:110},"Yellow":{rating:61.7,slope:103}
+  };
+
   const REGION_MAP={
+    "Nanaimo Golf Club":"Vancouver Island",
+    "Storey Creek Golf Club":"Vancouver Island",
+    "Fairwinds Golf Club":"Vancouver Island",
     "Big Sky Golf Club":"Sea-to-Sky / Sunshine Coast",
     "Nicklaus North Golf Course":"Sea-to-Sky / Sunshine Coast",
     "Fairmont Chateau Whistler Golf Club":"Sea-to-Sky / Sunshine Coast",
