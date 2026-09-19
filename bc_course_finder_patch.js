@@ -107,6 +107,39 @@
   // Ratings intentionally omitted here until the club's current rating card is reconciled
   // with the current official Black tee total (6,903 yards).
 
+
+  // Squamish Valley Golf Club — official 2026 scorecard and BC Golf Association handicap tables.
+  courseDefs["Squamish Valley Golf Club"]={
+    pars:[5,4,4,4,3,5,4,3,4,4,3,5,4,4,4,3,5,4],
+    tees:{
+      "Black":[539,371,318,440,199,472,343,185,402,365,190,483,449,332,368,140,508,417],
+      "Blue":[520,352,286,421,168,472,324,177,379,365,190,470,395,321,343,140,494,400],
+      "Gold":[485,352,286,356,153,420,310,166,379,365,165,470,364,321,343,140,478,355],
+      "White":[485,310,260,356,153,420,310,166,337,351,165,409,364,273,335,116,437,355],
+      "Green":[431,310,260,356,153,420,238,143,337,351,122,409,338,273,355,116,422,345],
+      "Red":[431,271,243,326,122,410,238,143,296,336,122,340,283,273,268,97,380,318]
+    },defaultTee:"Blue",labels:{"Black":"Black","Blue":"Blue","Gold":"Gold","White":"White","Green":"Green","Red":"Red"}
+  };
+  TEE_HANDICAP_RATINGS["Squamish Valley Golf Club"]={
+    "Black":{rating:71.5,slope:125},"Blue":{rating:70.0,slope:122},
+    "Gold":{rating:68.5,slope:122},"White":{rating:66.8,slope:118},
+    "Green":{rating:65.7,slope:113},"Red":{rating:63.1,slope:104}
+  };
+
+  // Furry Creek Golf & Country Club — current 18-hole layout; tee ratings cross-checked
+  // against the club's published rating/slope material and current booking data.
+  courseDefs["Furry Creek Golf & Country Club"]={
+    pars:[4,3,5,5,3,5,3,3,4,3,5,4,4,3,5,3,5,4],
+    tees:{
+      "Gold":[352,152,485,575,107,441,238,197,325,174,485,374,458,211,512,167,471,336],
+      "White":[326,129,459,524,97,425,200,167,285,122,460,326,432,184,466,140,430,295],
+      "Red":[291,104,431,421,91,350,185,150,244,97,413,301,325,141,415,117,419,254]
+    },defaultTee:"Gold",labels:{"Gold":"Gold","White":"White","Red":"Red"}
+  };
+  TEE_HANDICAP_RATINGS["Furry Creek Golf & Country Club"]={
+    "Gold":{rating:70.0,slope:125},"White":{rating:67.3,slope:116},"Red":{rating:63.8,slope:111}
+  };
+
   const REGION_MAP={
     "Big Sky Golf Club":"Sea-to-Sky / Sunshine Coast",
     "Nicklaus North Golf Course":"Sea-to-Sky / Sunshine Coast",
@@ -114,6 +147,8 @@
     "Blue Ocean Golf Club":"Sea-to-Sky / Sunshine Coast",
     "Sunshine Coast Golf & Country Club":"Sea-to-Sky / Sunshine Coast",
     "Myrtle Point Golf Club":"Sea-to-Sky / Sunshine Coast",
+    "Squamish Valley Golf Club":"Sea-to-Sky / Sunshine Coast",
+    "Furry Creek Golf & Country Club":"Sea-to-Sky / Sunshine Coast",
     "Swaneset Bay — Resort Course":"Lower Mainland / Fraser Valley",
     "Swaneset Bay — Links Course":"Lower Mainland / Fraser Valley",
     "Burnaby Mountain Golf Course":"Lower Mainland / Fraser Valley",
