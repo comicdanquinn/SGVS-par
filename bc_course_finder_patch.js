@@ -208,7 +208,78 @@
     "Black":{men:{rating:67.5,slope:117},women:{rating:72.0,slope:127}}
   };
 
+
+  // v6.3.23 Vancouver Island — verified current official scorecards.
+  courseDefs["Bear Mountain - Mountain Course"]={
+    pars:[5,4,4,3,4,4,3,4,4,3,4,5,5,3,4,3,4,5],
+    tees:{
+      "Golden":[540,375,395,184,368,432,173,483,437,152,429,510,523,165,471,189,381,603],
+      "Grizzly":[533,348,362,170,337,410,155,449,415,135,407,495,509,138,432,177,343,561],
+      "Black":[523,313,329,150,328,397,148,431,400,128,389,453,480,116,399,166,325,533],
+      "Spirit":[420,295,329,150,304,283,148,413,321,116,389,437,464,99,399,158,289,500],
+      "Cinnamon":[420,247,259,88,271,283,131,331,321,90,315,345,387,64,279,95,259,449]
+    },defaultTee:"Grizzly",labels:{"Golden":"Golden","Grizzly":"Grizzly","Black":"Black","Spirit":"Spirit","Cinnamon":"Cinnamon"}
+  };
+  // Rating data intentionally omitted until the current Mountain rating table is verified.
+
+  courseDefs["Bear Mountain - Valley Course"]={
+    pars:[5,3,4,4,4,3,4,4,4,3,4,5,4,3,5,3,4,5],
+    tees:{
+      "Golden":[501,235,403,398,357,215,395,366,442,202,370,488,471,152,588,207,459,558],
+      "Grizzly":[475,186,341,370,350,207,385,360,427,190,365,480,443,139,560,160,424,530],
+      "Black":[466,168,326,349,319,185,340,346,412,185,345,469,437,125,528,136,393,503],
+      "Spirit":[449,146,317,305,311,155,280,302,397,173,293,439,414,109,437,121,372,497],
+      "Cinnamon/Spirit":[449,146,317,305,311,113,280,302,337,89,293,305,383,109,411,121,291,443],
+      "Cinnamon":[427,127,217,237,198,113,264,296,337,89,206,305,383,79,411,104,291,443]
+    },defaultTee:"Grizzly",labels:{"Golden":"Golden","Grizzly":"Grizzly","Black":"Black","Spirit":"Spirit","Cinnamon/Spirit":"Cinnamon/Spirit","Cinnamon":"Cinnamon"}
+  };
+  TEE_HANDICAP_RATINGS["Bear Mountain - Valley Course"]={
+    "Golden":{men:{rating:73.5,slope:140}},
+    "Grizzly":{men:{rating:71.1,slope:139}},
+    "Black":{men:{rating:69.3,slope:134},women:{rating:75.4,slope:143}},
+    "Spirit":{men:{rating:67.0,slope:123},women:{rating:72.2,slope:134}},
+    "Cinnamon/Spirit":{men:{rating:64.8,slope:113},women:{rating:69.1,slope:125}},
+    "Cinnamon":{men:{rating:63.5,slope:103},women:{rating:66.4,slope:120}}
+  };
+
+  courseDefs["Highland Pacific Golf"]={
+    pars:[4,3,4,5,4,4,4,3,4,4,4,4,5,4,4,5,4,3],
+    tees:{
+      "Gold":[359,158,375,562,407,353,326,224,406,365,425,218,516,378,450,510,385,189],
+      "Blue":[359,158,337,487,407,353,327,179,406,365,380,188,516,378,402,510,385,189],
+      "White":[332,126,337,487,328,308,266,179,375,335,380,188,465,356,402,480,352,165],
+      "Green":[332,126,262,416,328,308,266,147,342,335,301,140,465,331,322,480,292,165],
+      "Silver":[310,101,262,416,275,235,253,147,342,299,301,140,410,331,322,420,292,145],
+      "Family":[90,60,125,200,165,115,150,50,150,135,150,40,200,100,150,150,150,120]
+    },defaultTee:"White",labels:{"Gold":"Gold","Blue":"Blue","White":"White","Green":"Green","Silver":"Silver","Family":"Family"}
+  };
+  // Rating data intentionally omitted until current WHS tables are verified.
+
+  courseDefs["Cordova Bay Golf Course"]={
+    pars:[4,5,4,3,4,3,5,4,4,4,3,4,3,5,4,4,3,5],
+    tees:{
+      "Black":[373,520,378,204,453,209,530,408,321,420,182,435,160,525,383,403,178,501],
+      "Blue":[373,515,369,196,445,205,492,396,309,398,164,425,155,519,383,379,160,491],
+      "Silver":[356,506,335,180,400,167,486,353,309,372,156,410,150,512,370,350,150,440],
+      "White":[338,460,325,150,390,160,441,353,294,350,135,378,140,445,348,306,140,430],
+      "Gold":[306,434,310,150,343,135,431,338,294,332,128,305,126,440,325,265,130,417],
+      "Copper":[306,404,280,130,343,110,405,290,267,268,128,305,91,385,279,234,105,417]
+    },defaultTee:"Blue",labels:{"Black":"Black","Blue":"Blue","Silver":"Silver","White":"White","Gold":"Gold","Copper":"Copper"}
+  };
+  TEE_HANDICAP_RATINGS["Cordova Bay Golf Course"]={
+    "Black":{men:{rating:72.0,slope:133},women:{rating:78.3,slope:142}},
+    "Blue":{men:{rating:71.1,slope:131},women:{rating:77.1,slope:140}},
+    "Silver":{men:{rating:69.5,slope:124},women:{rating:75.0,slope:135}},
+    "White":{men:{rating:67.3,slope:118},women:{rating:72.7,slope:130}},
+    "Gold":{men:{rating:65.9,slope:112},women:{rating:70.8,slope:122}},
+    "Copper":{men:{rating:63.9,slope:110},women:{rating:68.1,slope:115}}
+  };
+
   const REGION_MAP={
+    "Bear Mountain - Mountain Course":"Vancouver Island",
+    "Bear Mountain - Valley Course":"Vancouver Island",
+    "Highland Pacific Golf":"Vancouver Island",
+    "Cordova Bay Golf Course":"Vancouver Island",
     "Olympic View Golf Club":"Vancouver Island",
     "Nanaimo Golf Club":"Vancouver Island",
     "Storey Creek Golf Club":"Vancouver Island",
