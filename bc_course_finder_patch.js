@@ -275,7 +275,22 @@
     "Copper":{men:{rating:63.9,slope:110},women:{rating:68.1,slope:115}}
   };
 
+
+  // Highland Pacific Golf — official current course tour, Pacific nine followed by Highland nine.
+  courseDefs["Highland Pacific Golf"]={
+    pars:[4,3,4,5,4,4,4,3,4,4,4,4,5,4,4,5,4,3],
+    tees:{
+      "Gold":[359,158,375,562,407,353,326,224,406,365,425,218,516,378,450,510,385,189],
+      "Blue":[359,158,337,487,407,353,327,179,406,365,380,188,516,378,402,510,385,189],
+      "White":[332,126,337,487,328,308,266,179,375,335,380,188,465,356,402,480,352,165],
+      "Green":[332,126,262,416,328,308,266,147,342,335,301,140,465,331,322,480,292,165],
+      "Silver":[310,101,262,416,275,235,253,147,342,299,301,140,410,331,322,420,292,145],
+      "Family":[90,60,125,200,165,115,150,50,150,135,150,40,200,100,150,150,150,120]
+    },defaultTee:"Blue",labels:{"Gold":"Gold","Blue":"Blue","White":"White","Green":"Green","Silver":"Silver","Family":"Family"}
+  };
+
   const REGION_MAP={
+    "Highland Pacific Golf":"Vancouver Island",
     "Bear Mountain - Mountain Course":"Vancouver Island",
     "Bear Mountain - Valley Course":"Vancouver Island",
     "Highland Pacific Golf":"Vancouver Island",
